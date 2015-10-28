@@ -25,6 +25,11 @@ public:
         else
             qDebug() << "array of " << type <<  "not sorted";
     }
+    std::vector<T> getArr() const
+    {
+        return _arr;
+    }
+
 protected:
     std::vector<T> _arr;
     TimeManager _tManager;

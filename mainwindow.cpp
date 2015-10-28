@@ -10,7 +10,6 @@
 #include <future>
 #include <ctime>
 #include <QString>
-#include <windows.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -34,60 +33,38 @@ void MainWindow::on_pushButtonStartSort_clicked()
 {
 //    auto hThread = std::async(std::launch::async, &onClickSelectionSort, this);
 //    hThread.get();
-//    onClickSelectionSort();
+    onClickSelectionSort();
 
-//    onClickShellSort();
+    onClickShellSort();
 
-//    onClickMergeSort();
+    onClickMergeSort();
 
-//    onClickQuickSort();
+    onClickQuickSort();
 
-//    onClickCountingSort();
+    onClickCountingSort();
 
     onClickBubbleSort();
-
-
-//    std::function<int (int)> f = [&] (int i)
-//    {
-//        return (i == 1) ? 1 : i * f(i-1);
-//    };
-//    qDebug() << f(5);
-
-//    auto selSort = [&arr]()
-//    {
-//        for (unsigned int i = 0; i < arr.size(); ++i) {
-//            auto min = *(std::max_element(arr.begin(), arr.end()));
-//            int positionMin = 0;
-//            for (unsigned int j = i; j < arr.size(); ++j)
-//                if (min >= arr[j]) { min = arr[j]; positionMin = j; }
-//            std::swap(arr[i], arr[positionMin]);
-//        }
-//    };
-//    selSort();
-//    auto hThread = std::async(selSort);
-//    hThread.get();
-
 }
 
 void MainWindow::onClickSelectionSort()
 {
     SelectionSort <int> selSort(_arrInt);
     selSort.sort();
-    qDebug() << selSort.getAlgorithmTime();
+    qDebug() << "selection sort time:" << selSort.getAlgorithmTime();
 }
 
 void MainWindow::onClickShellSort()
 {
     ShellSort <int> shell(_arrInt, "Pratt12");
     shell.sort();
+    qDebug() << "shell sort time:" << shell.getAlgorithmTime();
 }
 
 void MainWindow::onClickMergeSort()
 {
     MergeSort <int> merge(_arrInt);
-
     merge.sort();
-    qDebug() << merge.getAlgorithmTime();
+    qDebug() << "merge sort time:" << merge.getAlgorithmTime();
 
 }
 
@@ -95,7 +72,7 @@ void MainWindow::onClickQuickSort()
 {
     QuickSort <int> quSort(_arrInt);
     quSort.sort();
-    qDebug() << quSort.getAlgorithmTime();
+    qDebug() << "quick sort time: " << quSort.getAlgorithmTime();
 
 }
 
@@ -103,17 +80,22 @@ void MainWindow::onClickCountingSort()
 {
     CountingSort <int> cSort(_arrInt);
     cSort.sort();
-    qDebug() << cSort.getAlgorithmTime();
+    qDebug() << "counting sort time: " << cSort.getAlgorithmTime();
 }
 
 void MainWindow::onClickBubbleSort()
 {
     BubbleSort <int> bSort(_arrInt);
     bSort.sort();
-    qDebug() << bSort.getAlgorithmTime();
+    qDebug() << "simple bubble sort time: " << bSort.getAlgorithmTime();
+    bSort.sortOptimized();
+    qDebug() << "optimized bubble sort time: " << bSort.getAlgorithmTime();
+    bSort.sortWithFlag();
+    qDebug() << "bubble sort with flag time: " << bSort.getAlgorithmTime();
+
 }
 
-void MainWindow::generateArray(std::vector<double> &arr, const unsigned int size)
+void MainWindow::generateArray(std::vector<double> &arr, unsigned const int size)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
