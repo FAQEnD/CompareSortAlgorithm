@@ -17,9 +17,9 @@ SOURCES += main.cpp\
         mainwindow.cpp
 
 HEADERS  += mainwindow.h \
-    selectionsort.h \
-    shellsort.h \
-    isort.h \
-    mergesort.h
+    sorts/isort.h \
+    sorts/mergesort.h \
+    sorts/selectionsort.h \
+    sorts/shellsort.h
 
 FORMS    += mainwindow.ui

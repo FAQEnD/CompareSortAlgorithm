@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "selectionsort.h"
-#include "shellsort.h"
+#include "sorts/selectionsort.h"
+#include "sorts/shellsort.h"
 #include <QtDebug>
 #include <future>
 #include <ctime>
