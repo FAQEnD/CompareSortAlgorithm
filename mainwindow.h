@@ -22,6 +22,7 @@ private slots:
     void onClickMergeSort();
     void onClickQuickSort();
     void onClickCountingSort();
+    void onClickBubbleSort();
     void generateArray(std::vector<int>&, const unsigned int);
     void generateArray(std::vector<double>&, const unsigned int);
 

@@ -6,7 +6,7 @@ template <class T>
 class CountingSort : public ISort<T>
 {
 public:
-    CountingSort(std::vector<T> arr);
+    CountingSort(std::vector<T>);
     T findMax();
 
     void sort()
@@ -19,6 +19,7 @@ public:
             for (unsigned int i = 0; i < counter.size(); i++)
                 for (int j = 0; j < counter[i]; j++)
                     this->_arr.push_back(i);
+
         this->_tManager.stop();
         this->isSorted();
     }
