@@ -21,6 +21,7 @@ private:
 public:
     void sort()
     {
+        this->_tManager.start();
         /*
         *	@Params:
         *	@_arr - vector with elements. Shoud be sorted
@@ -47,6 +48,7 @@ public:
                 this->_arr[j] = buff;
             }
         }
+        this->_tManager.stop();
         isSorted();
     }
 };

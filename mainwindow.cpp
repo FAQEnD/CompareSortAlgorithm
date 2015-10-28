@@ -7,6 +7,7 @@
 #include <future>
 #include <ctime>
 #include <QString>
+#include <windows.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,8 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     _size = {500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 10000000, 100000000};
-    generateArray(_arrInt, _size[2]);
-    generateArray(_arrDouble, _size[2]);
+    generateArray(_arrInt, _size[6]);
+    generateArray(_arrDouble, _size[6]);
 //    _arr = {5, 10, 2, 0, 15, 18, 1};
 //    connect(ui->pushButtonStartSort, SIGNAL(clicked()), this, SLOT(onClickSelectionSort()));
 //    connect(ui->pushButtonStartSort, SIGNAL(clicked()), this, SLOT(onClickShellSort()));
@@ -75,7 +76,15 @@ void MainWindow::onClickShellSort()
 void MainWindow::onClickMergeSort()
 {
     MergeSort <int> merge(_arrInt);
+//    LARGE_INTEGER start, end, f;
+//    QueryPerformanceCounter(&start);
     merge.sort();
+    qDebug() << merge.getAlgorithmTime();
+//    QueryPerformanceCounter(&end);
+//    QueryPerformanceFrequency(&f);
+//    double algTime = double(end.QuadPart - start.QuadPart) / f.QuadPart;
+//    qDebug() << "Merge sort time: " << algTime;
+
 }
 
 void MainWindow::generateArray(std::vector<double> &arr, const unsigned int size)

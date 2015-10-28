@@ -2,6 +2,7 @@
 #define MERGESORT_H
 #include "isort.h"
 #include <algorithm>
+#include <memory>
 
 template <class T>
 class MergeSort : public ISort<T>
@@ -13,8 +14,10 @@ public:
 
     void sort()
     {
+        this->_tManager.start();
+//        auto A = std::make_unique<std::vector<T> >(this->_arr);
         unsigned int size = this->_arr.size();
-        if (this->_arr.size() <= 20)
+        if (size <= 20)
             {
                 std::sort(this->_arr.begin(), this->_arr.end());
                 return;
@@ -22,15 +25,10 @@ public:
             for (unsigned int i = 1; i < size; i *= 2)
                 for (unsigned int j = 0; j < size - i; j += 2 * i)
                     merge(this->_arr, j, j + i, std::min(j + 2 * i, size));
+        this->_tManager.stop();
         isSorted();
     }
 };
-
-template <class T>
-MergeSort<T>::MergeSort(std::vector<T> arr)
-{
-    this->_arr = arr;
-}
 
 template <class T>
 void MergeSort<T>::merge(std::vector<T> &arr, const int left, const int middle, const int right)
@@ -43,11 +41,13 @@ void MergeSort<T>::merge(std::vector<T> &arr, const int left, const int middle, 
     {
         if (arr[left + indexA] < arr[middle + indexB])
         {
+//            result[indexA + indexB] = std::move(arr[left + indexA]);
             result[indexA + indexB] = arr[left + indexA];
             ++indexA;
         }
         else
         {
+//            result[indexA + indexB] = std::move(arr[middle + indexB]);
             result[indexA + indexB] = arr[middle + indexB];
             ++indexB;
         }
@@ -55,19 +55,22 @@ void MergeSort<T>::merge(std::vector<T> &arr, const int left, const int middle, 
 
     while (left + indexA < middle)
     {
+//        result[indexA + indexB] = std::move(arr[left + indexA]);
         result[indexA + indexB] = arr[left + indexA];
         ++indexA;
     }
 
     while (middle + indexB < right)
     {
+//        result[indexA + indexB] = std::move(arr[middle + indexB]);
         result[indexA + indexB] = arr[middle + indexB];
         ++indexB;
     }
 
     for (int i = 0; i < indexA + indexB; ++i)
     {
-        arr[left + i] = result[i];
+        arr[left + i] = std::move(result[i]);
+//        arr[left + i] = result[i];
     }
 }
 
@@ -84,6 +87,12 @@ void MergeSort<T>::isSorted()
         qDebug() << "Array of " << type <<  "sorted by merge sort";
     else
         qDebug() << "array of " << type <<  "not sorted by merge sort";
+}
+
+template <class T>
+MergeSort<T>::MergeSort(std::vector<T> arr)
+{
+    this->_arr = arr;
 }
 
 #endif // MERGESORT_H
