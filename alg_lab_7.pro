@@ -21,6 +21,7 @@ HEADERS  += mainwindow.h \
     sorts/mergesort.h \
     sorts/selectionsort.h \
     sorts/shellsort.h \
-    timemanager.h
+    timemanager.h \
+    sorts/quicksort.h
 
 FORMS    += mainwindow.ui

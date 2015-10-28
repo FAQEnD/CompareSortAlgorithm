@@ -21,7 +21,6 @@ private:
 public:
     void sort()
     {
-        this->_tManager.start();
         /*
         *	@Params:
         *	@_arr - vector with elements. Shoud be sorted
@@ -29,6 +28,7 @@ public:
         *
         *	*This method shoud sort @_arr by Shell Sort with gap from @_gaps
         */
+        this->_tManager.start();
         while (!_gaps.empty())
         {
             unsigned int gap = _gaps.top();

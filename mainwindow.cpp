@@ -3,6 +3,7 @@
 #include "sorts/selectionsort.h"
 #include "sorts/shellsort.h"
 #include "sorts/mergesort.h"
+#include "sorts/quicksort.h"
 #include <QtDebug>
 #include <future>
 #include <ctime>
@@ -15,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     _size = {500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 10000000, 100000000};
-    generateArray(_arrInt, _size[6]);
+    generateArray(_arrInt, _size[3]);
     generateArray(_arrDouble, _size[6]);
 //    _arr = {5, 10, 2, 0, 15, 18, 1};
 //    connect(ui->pushButtonStartSort, SIGNAL(clicked()), this, SLOT(onClickSelectionSort()));
@@ -35,7 +36,8 @@ void MainWindow::on_pushButtonStartSort_clicked()
 
 //    onClickShellSort();
 
-    onClickMergeSort();
+//    onClickMergeSort();
+    onClickQuickSort();
 
 
 //    std::function<int (int)> f = [&] (int i)
@@ -64,7 +66,7 @@ void MainWindow::onClickSelectionSort()
 {
     SelectionSort <int> selSort(_arrInt);
     selSort.sort();
-//    selSort.isSorted();
+    qDebug() << selSort.getAlgorithmTime();
 }
 
 void MainWindow::onClickShellSort()
@@ -76,14 +78,17 @@ void MainWindow::onClickShellSort()
 void MainWindow::onClickMergeSort()
 {
     MergeSort <int> merge(_arrInt);
-//    LARGE_INTEGER start, end, f;
-//    QueryPerformanceCounter(&start);
+
     merge.sort();
     qDebug() << merge.getAlgorithmTime();
-//    QueryPerformanceCounter(&end);
-//    QueryPerformanceFrequency(&f);
-//    double algTime = double(end.QuadPart - start.QuadPart) / f.QuadPart;
-//    qDebug() << "Merge sort time: " << algTime;
+
+}
+
+void MainWindow::onClickQuickSort()
+{
+    QuickSort <int> quSort(_arrInt);
+    quSort.sort();
+    qDebug() << quSort.getAlgorithmTime();
 
 }
 

@@ -9,7 +9,6 @@ class MergeSort : public ISort<T>
 {
 public:
     MergeSort(std::vector<T>);
-    void isSorted();
     void merge(std::vector<T>&, const int, const int, const int);
 
     void sort()
@@ -26,7 +25,7 @@ public:
                 for (unsigned int j = 0; j < size - i; j += 2 * i)
                     merge(this->_arr, j, j + i, std::min(j + 2 * i, size));
         this->_tManager.stop();
-        isSorted();
+        this->isSorted();
     }
 };
 
@@ -72,21 +71,6 @@ void MergeSort<T>::merge(std::vector<T> &arr, const int left, const int middle, 
         arr[left + i] = std::move(result[i]);
 //        arr[left + i] = result[i];
     }
-}
-
-template <class T>
-void MergeSort<T>::isSorted()
-{
-    QString type;
-    int sizeOfElement = sizeof(this->_arr[0]);
-    if(sizeOfElement == 4)
-        type = "int";
-    else
-        type = "double";
-    if(std::is_sorted(this->_arr.begin(), this->_arr.end()))
-        qDebug() << "Array of " << type <<  "sorted by merge sort";
-    else
-        qDebug() << "array of " << type <<  "not sorted by merge sort";
 }
 
 template <class T>
