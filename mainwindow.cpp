@@ -4,6 +4,7 @@
 #include "sorts/shellsort.h"
 #include "sorts/mergesort.h"
 #include "sorts/quicksort.h"
+#include "sorts/countingsort.h"
 #include <QtDebug>
 #include <future>
 #include <ctime>
@@ -37,7 +38,10 @@ void MainWindow::on_pushButtonStartSort_clicked()
 //    onClickShellSort();
 
 //    onClickMergeSort();
-    onClickQuickSort();
+
+//    onClickQuickSort();
+
+    onClickCountingSort();
 
 
 //    std::function<int (int)> f = [&] (int i)
@@ -90,6 +94,13 @@ void MainWindow::onClickQuickSort()
     quSort.sort();
     qDebug() << quSort.getAlgorithmTime();
 
+}
+
+void MainWindow::onClickCountingSort()
+{
+    CountingSort <int> cSort(_arrInt);
+    cSort.sort();
+    qDebug() << cSort.getAlgorithmTime();
 }
 
 void MainWindow::generateArray(std::vector<double> &arr, const unsigned int size)
