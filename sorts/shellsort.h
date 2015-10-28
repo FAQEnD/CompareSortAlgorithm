@@ -55,7 +55,10 @@ template <class T>
 ShellSort<T>::ShellSort(std::vector<T> arr, QString sequenceName)
 {
     this->_arr = arr;
-    _sequenceName = sequenceName;
+    if(sequenceName != "Shell" || sequenceName != "Pratt" || sequenceName != "Pratt2")
+        _sequenceName = "Shell";
+    else
+        _sequenceName = sequenceName;
     generateGap();
 }
 

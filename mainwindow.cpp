@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "sorts/selectionsort.h"
 #include "sorts/shellsort.h"
+#include "sorts/mergesort.h"
 #include <QtDebug>
 #include <future>
 #include <ctime>
@@ -31,7 +32,9 @@ void MainWindow::on_pushButtonStartSort_clicked()
 //    hThread.get();
 //    onClickSelectionSort();
 
-    onClickShellSort();
+//    onClickShellSort();
+
+    onClickMergeSort();
 
 
 //    std::function<int (int)> f = [&] (int i)
@@ -65,13 +68,14 @@ void MainWindow::onClickSelectionSort()
 
 void MainWindow::onClickShellSort()
 {
-    ShellSort <int> shell(_arrInt, "Pratt2");
+    ShellSort <int> shell(_arrInt, "Pratt12");
     shell.sort();
 }
 
 void MainWindow::onClickMergeSort()
 {
-
+    MergeSort <int> merge(_arrInt);
+    merge.sort();
 }
 
 void MainWindow::generateArray(std::vector<double> &arr, const unsigned int size)
