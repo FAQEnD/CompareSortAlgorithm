@@ -29,6 +29,10 @@ public:
     {
         return _arr;
     }
+//    ~ISort()
+//    {
+//        _arr.clear();
+//    }
 
 protected:
     std::vector<T> _arr;

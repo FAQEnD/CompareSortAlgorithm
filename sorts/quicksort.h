@@ -30,7 +30,7 @@ template <class T>
 void QuickSort<T>::quickSort(std::vector<T> &arr, unsigned int left, unsigned int right)
 {
     unsigned int l = left, r = right;
-    int piv = arr[(left+right)/2];
+    double piv = (arr[left] + arr[(left+right)/2] + arr[right])/3;
     while(l <= r)
     {
         while(arr[l] < piv)
