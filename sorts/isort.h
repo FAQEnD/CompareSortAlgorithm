@@ -17,13 +17,15 @@ public:
     }
     virtual void readArrayFromFile()
     {
-        _arr.reserve(100000000);
+//        qDebug() << "Start read file";
+        _arr.reserve(_MAX_VECTOR_SIZE);//need +1, coz read +1 bite ... fck
         QFile hFile("arr.dat");
         if (!hFile.open(QIODevice::ReadOnly | QIODevice::Text))
         {
             qDebug() << "Error in opening file arr.dat";
             return;
-        }
+        }/*else
+            qDebug() << "File opened well";*/
         QTextStream in(&hFile);
         while(!in.atEnd())
         {
@@ -31,6 +33,7 @@ public:
             in >> i;
             _arr.push_back(i);
         }
+//        qDebug() << "All working good, array readed";
         _arr.pop_back();
     }
 
@@ -47,12 +50,13 @@ public:
         else
             qDebug() << "array of " << type <<  "not sorted by ALGORITHM: " << _sortAlgorithmName;
     }
-//    ~ISort()
-//    {
-//        _arr.clear();
-//    }
+    ~ISort()
+    {
+        _arr.clear();
+    }
 
 protected:
+    const unsigned int _MAX_VECTOR_SIZE = 100000001;
     std::vector<T> _arr;
     TimeManager _tManager;
     QString _sortAlgorithmName;

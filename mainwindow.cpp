@@ -36,19 +36,28 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButtonStartSort_clicked()
 {
     prepareArray(_currentSizeIndex, "int");
-//    auto hThread = std::async(std::launch::async, &onClickSelectionSort, this);
-//    hThread.get();
-    onClickSelectionSort();
-    onClickShellSort("Shell");
-    onClickShellSort("Pratt");
-    onClickShellSort("Pratt2");
-//    auto hSort = std::async(std::launch::async, [this] { return this->onClickSelectionSort(_arrInt); } );
-    // create new thread and formate lambda function for passing arg to function
-//    hSort.get();
-    onClickMergeSort();
-    onClickQuickSort();
-    onClickCountingSort();
-    onClickBubbleSort();
+//    prepareArray(_currentSizeIndex, "r int");
+    if(_currentSizeIndex <= 6) //then we can sort in threads
+    {
+        qDebug() << "Run in threads";
+    }
+    else
+    {
+        qDebug() << "Run one by one";
+        //    auto hThread = std::async(std::launch::async, &onClickSelectionSort, this);
+        //    hThread.get();
+//        onClickSelectionSort();
+        onClickShellSort("Shell");
+        onClickShellSort("Pratt");
+        onClickShellSort("Pratt2");
+        //    auto hSort = std::async(std::launch::async, [this] { return this->onClickSelectionSort(_arrInt); } );
+        // create new thread and formate lambda function for passing arg to function
+        //    hSort.get();
+        onClickMergeSort();
+        onClickQuickSort();
+        onClickCountingSort();
+//        onClickBubbleSort();
+    }
 
 //    onClickSelectionSort(_arrDouble);
 //    onClickShellSort(_arrDouble, "Shell");
@@ -172,10 +181,7 @@ void MainWindow::prepareArray(const unsigned int size, QString type)
                 if(std::is_sorted(_arrInt.begin(), _arrInt.end()))
                     std::reverse(_arrInt.begin(), _arrInt.end());
                 else
-                {
-                    std::sort(_arrInt.begin(), _arrInt.end());
-                    std::reverse(_arrInt.begin(), _arrInt.end());
-                }
+                    std::sort(_arrInt.begin(), _arrInt.end(), std::greater<int>());
                 saveArrayToFile(_arrInt);
                 _arrInt.clear();
             }
@@ -198,10 +204,7 @@ void MainWindow::prepareArray(const unsigned int size, QString type)
                 if(std::is_sorted(_arrDouble.begin(), _arrDouble.end()))
                     std::reverse(_arrDouble.begin(), _arrDouble.end());
                 else
-                {
-                    std::sort(_arrDouble.begin(), _arrDouble.end());
-                    std::reverse(_arrDouble.begin(), _arrDouble.end());
-                }
+                    std::sort(_arrDouble.begin(), _arrDouble.end(), std::greater<double>());
                 saveArrayToFile(_arrDouble);
                 _arrDouble.clear();
             }
@@ -222,7 +225,7 @@ void MainWindow::generateArray(std::vector<double> &arr, unsigned const int size
         {
             qDebug() << "Bad memory allocate in function generateArray(double, size)";
             exit(-1);
-    };
+        };
 }
 
 template <class T>
@@ -240,7 +243,6 @@ void MainWindow::printArray(std::vector<T> &arr)
         str = QString::number(arrEl) + ' ';
         ui->textOutput->append(str);
     }
-//    ui->textOutput->append(str);
 }
 
 void MainWindow::generateArray(std::vector<int> &arr, unsigned const int size)

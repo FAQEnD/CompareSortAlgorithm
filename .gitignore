@@ -7,3 +7,4 @@ release
 *.dat
 debug/*
 release/*
+*.pro.user
