@@ -5,6 +5,7 @@
 #include <QString>
 #include <QFile>
 #include <QTextStream>
+#include <stdexcept>
 
 template <class T>
 class ISort
@@ -17,15 +18,28 @@ public:
     }
     virtual void readArrayFromFile()
     {
-//        qDebug() << "Start read file";
-        _arr.reserve(_MAX_VECTOR_SIZE);//need +1, coz read +1 bite ... fck
+        qDebug() << "Start read file";
+        try{
+            _arr.reserve(_MAX_VECTOR_SIZE);//need +1, coz read +1 bite in while(!in.atEnd())... fck
+        }catch(const std::length_error &le)
+        {
+            qWarning() << "reserve lengh error: " << le.what();
+            qDebug() << "vector<double> max size: " << _arr.max_size();
+            exit(-1);
+        }catch(...)
+        {
+            qWarning() << "Got error in reserve";
+            qDebug() << "vector<double> max size: " << _arr.max_size();
+            exit(-1);
+        }
+            qDebug() << "_arr reversed, trying to open file";
         QFile hFile("arr.dat");
         if (!hFile.open(QIODevice::ReadOnly | QIODevice::Text))
         {
             qDebug() << "Error in opening file arr.dat";
             return;
-        }/*else
-            qDebug() << "File opened well";*/
+        }else
+            qDebug() << "File opened well";
         QTextStream in(&hFile);
         while(!in.atEnd())
         {
@@ -33,7 +47,7 @@ public:
             in >> i;
             _arr.push_back(i);
         }
-//        qDebug() << "All working good, array readed";
+        qDebug() << "All working good, array readed";
         _arr.pop_back();
     }
 

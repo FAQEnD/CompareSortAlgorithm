@@ -35,7 +35,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButtonStartSort_clicked()
 {
-    prepareArray(_currentSizeIndex, "int");
+    prepareArray(_currentSizeIndex, "double");
 //    prepareArray(_currentSizeIndex, "r int");
     if(_currentSizeIndex <= 6) //then we can sort in threads
     {
@@ -47,15 +47,15 @@ void MainWindow::on_pushButtonStartSort_clicked()
         //    auto hThread = std::async(std::launch::async, &onClickSelectionSort, this);
         //    hThread.get();
 //        onClickSelectionSort();
-        onClickShellSort("Shell");
-        onClickShellSort("Pratt");
-        onClickShellSort("Pratt2");
+//        onClickShellSortD("Shell");
+//        onClickShellSortD("Pratt");
+//        onClickShellSortD("Pratt2");
         //    auto hSort = std::async(std::launch::async, [this] { return this->onClickSelectionSort(_arrInt); } );
         // create new thread and formate lambda function for passing arg to function
         //    hSort.get();
-        onClickMergeSort();
-        onClickQuickSort();
-        onClickCountingSort();
+        onClickMergeSortD();
+        onClickQuickSortD();
+//        onClickCountingSort();
 //        onClickBubbleSort();
     }
 
@@ -226,6 +226,7 @@ void MainWindow::generateArray(std::vector<double> &arr, unsigned const int size
             qDebug() << "Bad memory allocate in function generateArray(double, size)";
             exit(-1);
         };
+    qDebug() << "array generated";
 }
 
 template <class T>
