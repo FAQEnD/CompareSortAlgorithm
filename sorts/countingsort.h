@@ -6,7 +6,7 @@ template <class T>
 class CountingSort : public ISort<T>
 {
 public:
-    CountingSort(std::vector<T>);
+    CountingSort();
     T findMax();
 
     void sort()
@@ -29,9 +29,10 @@ public:
 #endif // COUNTINGSORT_H
 
 template <class T>
-CountingSort<T>::CountingSort(std::vector<T> arr)
+CountingSort<T>::CountingSort()
 {
-    this->_arr = arr;
+    this->readArrayFromFile();
+    this->_sortAlgorithmName = "Counting";
 }
 
 template <class T>

@@ -6,9 +6,10 @@ template <class T>
 class BubbleSort : public ISort<T>
 {
 public:
-    BubbleSort(std::vector<T>);
+    BubbleSort();
     void sortOptimized();
     void sortWithFlag();
+    void readArrayFromFile();
 private:
     std::vector<T> _saveArr;
 
@@ -30,14 +31,16 @@ public:
 #endif // BUBBLESORT_H
 
 template <class T>
-BubbleSort<T>::BubbleSort(std::vector<T> arr)
+BubbleSort<T>::BubbleSort()
 {
-    _saveArr = arr;
+    this->readArrayFromFile();
+    this->_sortAlgorithmName = "Bubble";
 }
 
 template <class T>
 void BubbleSort<T>::sortOptimized()
 {
+    this->_sortAlgorithmName = "Optimized bubble";
     this->_arr = _saveArr;
     this->_tManager.start();
 
@@ -52,6 +55,7 @@ void BubbleSort<T>::sortOptimized()
 template <class T>
 void BubbleSort<T>::sortWithFlag()
 {
+    this->_sortAlgorithmName = "With flag bubble";
     this->_arr = _saveArr;
     this->_tManager.start();
 
@@ -68,4 +72,24 @@ void BubbleSort<T>::sortWithFlag()
     }
     this->_tManager.stop();
     this->isSorted();
+}
+
+template <class T>
+void BubbleSort<T>::readArrayFromFile()
+{
+    _saveArr.reserve(100000000);
+    QFile hFile("arr.dat");
+    if (!hFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qDebug() << "Error in opening file arr.dat";
+        return;
+    }
+    QTextStream in(&hFile);
+    while(!in.atEnd())
+    {
+        T i ;
+        in >> i;
+        _saveArr.push_back(i);
+    }
+    _saveArr.pop_back();
 }

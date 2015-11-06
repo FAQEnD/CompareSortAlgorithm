@@ -8,7 +8,7 @@ template <class T>
 class MergeSort : public ISort<T>
 {
 public:
-    MergeSort(std::vector<T>);
+    MergeSort();
     void merge(std::vector<T>&, const int, const int, const int);
 
     void sort()
@@ -16,7 +16,7 @@ public:
         this->_tManager.start();
 //        auto A = std::make_unique<std::vector<T> >(this->_arr);
         unsigned int size = this->_arr.size();
-        if (size <= 20)
+        if (size <= 50)
             {
                 std::sort(this->_arr.begin(), this->_arr.end());
                 return;
@@ -68,15 +68,16 @@ void MergeSort<T>::merge(std::vector<T> &arr, const int left, const int middle, 
 
     for (int i = 0; i < indexA + indexB; ++i)
     {
-        arr[left + i] = std::move(result[i]);
-//        arr[left + i] = result[i];
+//        arr[left + i] = std::move(result[i]);
+        arr[left + i] = result[i];
     }
 }
 
 template <class T>
-MergeSort<T>::MergeSort(std::vector<T> arr)
+MergeSort<T>::MergeSort()
 {
-    this->_arr = arr;
+    this->readArrayFromFile();
+    this->_sortAlgorithmName = "Merge";
 }
 
 #endif // MERGESORT_H

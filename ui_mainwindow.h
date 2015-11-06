@@ -13,11 +13,13 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
@@ -28,6 +30,8 @@ class Ui_MainWindow
 public:
     QWidget *centralWidget;
     QPushButton *pushButtonStartSort;
+    QTextEdit *textOutput;
+    QComboBox *comboBoxSizeIndex;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -36,16 +40,22 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(305, 237);
+        MainWindow->resize(367, 248);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         pushButtonStartSort = new QPushButton(centralWidget);
         pushButtonStartSort->setObjectName(QStringLiteral("pushButtonStartSort"));
-        pushButtonStartSort->setGeometry(QRect(70, 50, 80, 21));
+        pushButtonStartSort->setGeometry(QRect(10, 40, 80, 21));
+        textOutput = new QTextEdit(centralWidget);
+        textOutput->setObjectName(QStringLiteral("textOutput"));
+        textOutput->setGeometry(QRect(180, 10, 171, 171));
+        comboBoxSizeIndex = new QComboBox(centralWidget);
+        comboBoxSizeIndex->setObjectName(QStringLiteral("comboBoxSizeIndex"));
+        comboBoxSizeIndex->setGeometry(QRect(100, 40, 69, 22));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 305, 20));
+        menuBar->setGeometry(QRect(0, 0, 367, 21));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -56,13 +66,29 @@ public:
 
         retranslateUi(MainWindow);
 
+        comboBoxSizeIndex->setCurrentIndex(6);
+
+
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
 
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
-        pushButtonStartSort->setText(QApplication::translate("MainWindow", "Sort", 0));
+        pushButtonStartSort->setText(QApplication::translate("MainWindow", "Sort arrays", 0));
+        comboBoxSizeIndex->clear();
+        comboBoxSizeIndex->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "500", 0)
+         << QApplication::translate("MainWindow", "1000", 0)
+         << QApplication::translate("MainWindow", "5000", 0)
+         << QApplication::translate("MainWindow", "10000", 0)
+         << QApplication::translate("MainWindow", "50000", 0)
+         << QApplication::translate("MainWindow", "100000", 0)
+         << QApplication::translate("MainWindow", "500000", 0)
+         << QApplication::translate("MainWindow", "1000000", 0)
+         << QApplication::translate("MainWindow", "10000000", 0)
+         << QApplication::translate("MainWindow", "100000000", 0)
+        );
     } // retranslateUi
 
 };

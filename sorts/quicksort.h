@@ -6,7 +6,7 @@ template <class T>
 class QuickSort : public ISort<T>
 {
 public:
-    QuickSort(std::vector<T>);
+    QuickSort();
     void quickSort(std::vector<T>&, unsigned int, unsigned int);
 
     void sort()
@@ -21,9 +21,10 @@ public:
 #endif // QUICKSORT_H
 
 template <class T>
-QuickSort<T>::QuickSort(std::vector<T> arr)
+QuickSort<T>::QuickSort()
 {
-    this->_arr = arr;
+    this->readArrayFromFile();
+    this->_sortAlgorithmName = "Quick";
 }
 
 template <class T>

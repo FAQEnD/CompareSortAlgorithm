@@ -17,29 +17,37 @@ public:
 
 private slots:
     void on_pushButtonStartSort_clicked();
-    void onClickSelectionSort(std::vector<int>);
-    void onClickShellSort(std::vector<int>, QString);
-    void onClickMergeSort(std::vector<int>);
-    void onClickQuickSort(std::vector<int>);
-    void onClickCountingSort(std::vector<int>);
-    void onClickBubbleSort(std::vector<int>);
+    void onClickSelectionSort();
+    void onClickShellSort(QString);
+    void onClickMergeSort();
+    void onClickQuickSort();
+    void onClickCountingSort();
+    void onClickBubbleSort();
 
-    void onClickSelectionSort(std::vector<double>);
-    void onClickShellSort(std::vector<double>, QString);
-    void onClickMergeSort(std::vector<double>);
-    void onClickQuickSort(std::vector<double>);
-    void onClickBubbleSort(std::vector<double>);
-    void prepareArray(unsigned const int);
+    void onClickSelectionSortD();
+    void onClickShellSortD(QString);
+    void onClickMergeSortD();
+    void onClickQuickSortD();
+    void onClickBubbleSortD();
+
+    void prepareArray(unsigned const int, QString);
     void generateArray(std::vector<int>&, const unsigned int);
     void generateArray(std::vector<double>&, const unsigned int);
+
+    void on_comboBoxSizeIndex_currentIndexChanged(int index);
 
 private:
     Ui::MainWindow *ui;
     std::vector<int> _arrInt;
-    std::vector<int> _arrIntSorted;
     std::vector<double> _arrDouble;
-    std::vector<double> _arrDoubleSorted;
     std::vector<unsigned int> _size;
+    unsigned int _currentSizeIndex;
+    template <class T>
+    void saveArrayToFile(std::vector<T>&);
+    template <class T>
+    void readArrayFromFile(std::vector<T>&);
+    template <class T>
+    void printArray(std::vector<T>&);
 };
 
 #endif // MAINWINDOW_H

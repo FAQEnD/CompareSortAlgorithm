@@ -9,7 +9,7 @@ template <class T>
 class SelectionSort : public ISort<T>
 {
 public:
-    SelectionSort(std::vector<T> arr);
+    SelectionSort();
 
     void sort()
     {
@@ -29,9 +29,10 @@ public:
 
 
 template <class T>
-SelectionSort<T>::SelectionSort(std::vector<T> arr)
+SelectionSort<T>::SelectionSort()
 {
-    this->_arr = arr;
+    this->readArrayFromFile();
+    this->_sortAlgorithmName = "Selection";
 }
 
 #endif // SELECTIONSORT_H

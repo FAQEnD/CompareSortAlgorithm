@@ -11,7 +11,7 @@ template <class T>
 class ShellSort : public ISort<T>
 {
 public:
-    ShellSort(std::vector<T>, QString);
+    ShellSort(QString);
 private:
     std::stack<int> _gaps;
     QString _sequenceName;
@@ -54,14 +54,12 @@ public:
 };
 
 template <class T>
-ShellSort<T>::ShellSort(std::vector<T> arr, QString sequenceName)
+ShellSort<T>::ShellSort(QString sequenceName)
 {
-    this->_arr = arr;
-//    if(sequenceName != "Shell" || sequenceName != "Pratt" || sequenceName != "Pratt2")
-//        _sequenceName = "Shell";
-//    else
-        _sequenceName = sequenceName;
+    this->readArrayFromFile();
+    _sequenceName = sequenceName;
     generateGap();
+    this->_sortAlgorithmName = "Shell";
 }
 
 template <class T>
