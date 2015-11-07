@@ -10,7 +10,11 @@ class MergeSort : public ISort<T>
 public:
     MergeSort();
     void merge(std::vector<T>&, const int, const int, const int);
-
+    static double algTimeSum;
+    double getAlgTimeSum()
+    {
+        return this->algTimeSum;
+    }
     void sort()
     {
         this->_tManager.start();
@@ -26,8 +30,12 @@ public:
                     merge(this->_arr, j, j + i, std::min(j + 2 * i, size));
         this->_tManager.stop();
         this->isSorted();
+        this->algTimeSum += this->getAlgorithmTime();
     }
 };
+
+template <class T>
+double MergeSort<T>::algTimeSum;
 
 template <class T>
 void MergeSort<T>::merge(std::vector<T> &arr, const int left, const int middle, const int right)

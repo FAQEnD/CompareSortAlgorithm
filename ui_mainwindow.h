@@ -40,7 +40,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(367, 248);
+        MainWindow->resize(478, 248);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         pushButtonStartSort = new QPushButton(centralWidget);
@@ -48,14 +48,15 @@ public:
         pushButtonStartSort->setGeometry(QRect(10, 40, 80, 21));
         textOutput = new QTextEdit(centralWidget);
         textOutput->setObjectName(QStringLiteral("textOutput"));
-        textOutput->setGeometry(QRect(180, 10, 171, 171));
+        textOutput->setGeometry(QRect(180, 10, 271, 171));
+        textOutput->setReadOnly(true);
         comboBoxSizeIndex = new QComboBox(centralWidget);
         comboBoxSizeIndex->setObjectName(QStringLiteral("comboBoxSizeIndex"));
         comboBoxSizeIndex->setGeometry(QRect(100, 40, 69, 22));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 367, 21));
+        menuBar->setGeometry(QRect(0, 0, 478, 21));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));

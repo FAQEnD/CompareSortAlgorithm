@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>367</width>
+    <width>478</width>
     <height>248</height>
    </rect>
   </property>
@@ -32,9 +32,12 @@
      <rect>
       <x>180</x>
       <y>10</y>
-      <width>171</width>
+      <width>271</width>
       <height>171</height>
      </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QComboBox" name="comboBoxSizeIndex">
@@ -106,7 +109,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>367</width>
+     <width>478</width>
      <height>21</height>
     </rect>
    </property>

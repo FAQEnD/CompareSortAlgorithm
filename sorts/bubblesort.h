@@ -10,10 +10,25 @@ public:
     void sortOptimized();
     void sortWithFlag();
     void readArrayFromFile();
+    static double algTimeSumSimple;
+    static double algTimeSumOptimized;
+    static double algTimeSumWithFlag;
 private:
     std::vector<T> _saveArr;
 
 public:
+    double getAlgTimeSumSimple()
+    {
+        return this->algTimeSumSimple;
+    }
+    double getAlgTimeSumOptimized()
+    {
+        return this->algTimeSumOptimized;
+    }
+    double getAlgTimeSumWithFlag()
+    {
+        return this->algTimeSumWithFlag;
+    }
     void sort()
     {
         this->_arr = _saveArr;
@@ -25,10 +40,18 @@ public:
                     std::swap(this->_arr[j + 1], this->_arr[j]);
         this->_tManager.stop();
         this->isSorted();
+        this->algTimeSumSimple += this->getAlgorithmTime();
     }
 };
 
 #endif // BUBBLESORT_H
+
+template <class T>
+double BubbleSort<T>::algTimeSumSimple;
+template <class T>
+double BubbleSort<T>::algTimeSumOptimized;
+template <class T>
+double BubbleSort<T>::algTimeSumWithFlag;
 
 template <class T>
 BubbleSort<T>::BubbleSort()
@@ -50,6 +73,7 @@ void BubbleSort<T>::sortOptimized()
                 std::swap(this->_arr[j + 1], this->_arr[j]);
     this->_tManager.stop();
     this->isSorted();
+    this->algTimeSumOptimized += this->getAlgorithmTime();
 }
 
 template <class T>
@@ -72,6 +96,7 @@ void BubbleSort<T>::sortWithFlag()
     }
     this->_tManager.stop();
     this->isSorted();
+    this->algTimeSumWithFlag += this->getAlgorithmTime();
 }
 
 template <class T>

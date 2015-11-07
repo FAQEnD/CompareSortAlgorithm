@@ -8,6 +8,11 @@ class CountingSort : public ISort<T>
 public:
     CountingSort();
     T findMax();
+    static double algTimeSum;
+    double getAlgTimeSum()
+    {
+        return this->algTimeSum;
+    }
 
     void sort()
     {
@@ -22,11 +27,15 @@ public:
 
         this->_tManager.stop();
         this->isSorted();
+        this->algTimeSum += this->getAlgorithmTime();
     }
 
 };
 
 #endif // COUNTINGSORT_H
+
+template <class T>
+double CountingSort<T>::algTimeSum;
 
 template <class T>
 CountingSort<T>::CountingSort()

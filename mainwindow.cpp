@@ -22,12 +22,30 @@ MainWindow::MainWindow(QWidget *parent) :
         this->onClickSelectionSort();
         this->onClickSelectionSort();
         return this->onClickSelectionSort(); });
-    _sortInt.push_back([&]() { return this->onClickShellSort("Shell"); });
-    _sortInt.push_back([&]() { return this->onClickShellSort("Pratt"); });
-    _sortInt.push_back([&]() { return this->onClickShellSort("Pratt2"); });
-    _sortInt.push_back([&]() { return this->onClickMergeSort(); });
-    _sortInt.push_back([&]() { return this->onClickQuickSort(); });
-    _sortInt.push_back([&]() { return this->onClickCountingSort(); });
+    _sortInt.push_back([&]() {
+        this->onClickShellSort("Shell");
+        this->onClickShellSort("Shell");
+        return this->onClickShellSort("Shell"); });
+    _sortInt.push_back([&]() {
+        this->onClickShellSort("Pratt");
+        this->onClickShellSort("Pratt");
+        return this->onClickShellSort("Pratt"); });
+    _sortInt.push_back([&]() {
+        this->onClickShellSort("Pratt2");
+        this->onClickShellSort("Pratt2");
+        return this->onClickShellSort("Pratt2"); });
+    _sortInt.push_back([&]() {
+        this->onClickMergeSort();
+        this->onClickMergeSort();
+        return this->onClickMergeSort(); });
+    _sortInt.push_back([&]() {
+        this->onClickQuickSort();
+        this->onClickQuickSort();
+        return this->onClickQuickSort(); });
+    _sortInt.push_back([&]() {
+        this->onClickCountingSort();
+        this->onClickCountingSort();
+        return this->onClickCountingSort(); });
 
     _sortDouble.push_back([&]() { return this->onClickBubbleSortD(); });
     _sortDouble.push_back([&]() { return this->onClickSelectionSortD(); });
@@ -47,96 +65,129 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButtonStartSort_clicked()
 {
-    prepareArray(_currentSizeIndex, "int");
-    if(_currentSizeIndex <= 6) //then we can sort in threads
+//    prepareArray(_currentSizeIndex, "int");
+    for(unsigned int i = 0; i < _size.size(); ++i)
     {
-        qDebug() << "Run in threads";
-        _sortInt[1]();
-    }
-    else
-    {
-        qDebug() << "Run one by one";
-        //    auto hThread = std::async(std::launch::async, &onClickSelectionSort, this);
-        //    hThread.get();
-//        onClickSelectionSort();
-//        onClickShellSortD("Shell");
-//        onClickShellSortD("Pratt");
-//        onClickShellSortD("Pratt2");
-        //    auto hSort = std::async(std::launch::async, [this] { return this->onClickSelectionSort(_arrInt); } );
-        // create new thread and formate lambda function for passing arg to function
-        //    hSort.get();
-//        onClickMergeSortD();
-        onClickQuickSortD();
-//        onClickCountingSort();
-//        onClickBubbleSort();
+        ui->textOutput->append("Size: " + QString::number(_size[i]));
+        prepareArray(i, "int");
+        for(unsigned int j = 0; j < _sortInt.size(); ++j)
+        {
+            if(i < 4)
+                _sortInt[j]();
+            else
+                if(j > 1)
+                    _sortInt[j]();
+        }
     }
 
-//    onClickSelectionSort(_arrDouble);
-//    onClickShellSort(_arrDouble, "Shell");
-//    onClickShellSort(_arrDouble, "Pratt");
-//    onClickShellSort(_arrDouble, "Pratt2");
-//    onClickMergeSort(_arrDouble);
-//    onClickQuickSort(_arrDouble);
-//    onClickBubbleSort(_arrDouble);
+    //    auto hThread = std::async(std::launch::async, &onClickSelectionSort, this);
+    //    hThread.get();
+    //    auto hSort = std::async(std::launch::async, [this] { return this->onClickSelectionSort(_arrInt); } );
+    // create new thread and formate lambda function for passing arg to function
+    //    hSort.get();
+
+    //    onClickSelectionSort(_arrDouble);
+    //    onClickShellSort(_arrDouble, "Shell");
+    //    onClickShellSort(_arrDouble, "Pratt");
+    //    onClickShellSort(_arrDouble, "Pratt2");
+    //    onClickMergeSort(_arrDouble);
+    //    onClickQuickSort(_arrDouble);
+    //    onClickBubbleSort(_arrDouble);
 }
 
 void MainWindow::onClickSelectionSort()
 {
+    static int runCount;
     SelectionSort <int> selSort;
     selSort.sort();
     qDebug() << "selection sort time:" << selSort.getAlgorithmTime();
+    ++runCount;
+    if(runCount >= 3)
+    {
+        ui->textOutput->append("Selection: " + QString::number(selSort.getAlgTimeSum()/3));
+        runCount = 0;
+    }
 }
 
 void MainWindow::onClickShellSort(QString sequenceName)
 {
+    static int runCount;
     ShellSort <int> shell(sequenceName);
     shell.sort();
     qDebug() << "shell sort time:" << shell.getAlgorithmTime();
+    ++runCount;
+    if(runCount >= 3)
+    {
+        if(sequenceName == "Shell")
+            ui->textOutput->append("Shell(Shell sequence): " + QString::number(shell.getAlgTimeSumShell()/3));
+        else
+            if(sequenceName == "Pratt")
+                ui->textOutput->append("Shell(Pratt sequence): " + QString::number(shell.getAlgTimeSumPratt()/3));
+            else
+                ui->textOutput->append("Shell(PrattSecond sequence): " + QString::number(shell.getAlgTimeSumPrattSecond()/3));
+        runCount = 0;
+    }
 }
 
 void MainWindow::onClickMergeSort()
 {
-    MergeSort <int> merge;
-    merge.sort();
-    qDebug() << "merge sort time:" << merge.getAlgorithmTime();
-
+    static int runCount;
+    MergeSort <int> mSort;
+    mSort.sort();
+    qDebug() << "merge sort time:" << mSort.getAlgorithmTime();
+    ++runCount;
+    if(runCount >= 3)
+    {
+        ui->textOutput->append("Merge: " + QString::number(mSort.getAlgTimeSum()/3));
+        runCount = 0;
+    }
 }
 
 void MainWindow::onClickQuickSort()
 {
+    static int runCount;
     QuickSort <int> quSort;
     quSort.sort();
     qDebug() << "quick sort time: " << quSort.getAlgorithmTime();
+    ++runCount;
+    if(runCount >= 3)
+    {
+        ui->textOutput->append("Quick: " + QString::number(quSort.getAlgTimeSum()/3));
+        runCount = 0;
+    }
 
 }
 
 void MainWindow::onClickCountingSort()
 {
+    static int runCount;
     CountingSort <int> cSort;
     cSort.sort();
     qDebug() << "counting sort time: " << cSort.getAlgorithmTime();
+    ++runCount;
+    if(runCount >= 3)
+    {
+        ui->textOutput->append("Counting: " + QString::number(cSort.getAlgTimeSum()/3));
+        runCount = 0;
+    }
 }
 
 void MainWindow::onClickBubbleSort()
 {
-    static double simpleBubbleSortCount, optimizedBubbleSortCount, flagBubbleSortCount;
     static int runCount;
     BubbleSort <int> bSort;
     bSort.sort();
-    qDebug() << "simple bubble sort time: " << bSort.getAlgorithmTime();
-    simpleBubbleSortCount += bSort.getAlgorithmTime();
+    qDebug() << "Simple Bubble: " << bSort.getAlgorithmTime();
     bSort.sortOptimized();
-    qDebug() << "optimized bubble sort time: " << bSort.getAlgorithmTime();
-    optimizedBubbleSortCount += bSort.getAlgorithmTime();
+    qDebug() << "Optimized Bubble: " << bSort.getAlgorithmTime();
     bSort.sortWithFlag();
     qDebug() << "bubble sort with flag time: " << bSort.getAlgorithmTime();
-    flagBubbleSortCount += bSort.getAlgorithmTime();
     ++runCount;
     if(runCount >= 3)
     {
-        qDebug() << "In sum simple bubble sort time: " << simpleBubbleSortCount;
-        qDebug() << "In sum optimized bubble sort time: " << optimizedBubbleSortCount;
-        qDebug() << "In sum wiht flag bubble sort time: " << flagBubbleSortCount;
+        ui->textOutput->append("Simple Bubble: " + QString::number(bSort.getAlgTimeSumSimple()/3));
+        ui->textOutput->append("Optimized Bubble: " + QString::number(bSort.getAlgTimeSumOptimized()/3));
+        ui->textOutput->append("With flag Bubble: " + QString::number(bSort.getAlgTimeSumWithFlag()/3));
         runCount = 0;
     }
 }

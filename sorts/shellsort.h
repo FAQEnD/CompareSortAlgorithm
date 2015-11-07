@@ -12,6 +12,9 @@ class ShellSort : public ISort<T>
 {
 public:
     ShellSort(QString);
+    static double algTimeSumShell;
+    static double algTimeSumPratt;
+    static double algTimeSumPrattSecond;
 private:
     std::stack<int> _gaps;
     QString _sequenceName;
@@ -19,6 +22,18 @@ private:
     void generateGap();
 
 public:
+    double getAlgTimeSumShell()
+    {
+        return this->algTimeSumShell;
+    }
+    double getAlgTimeSumPratt()
+    {
+        return this->algTimeSumPratt;
+    }
+    double getAlgTimeSumPrattSecond()
+    {
+        return this->algTimeSumPrattSecond;
+    }
     void sort()
     {
         /*
@@ -50,8 +65,22 @@ public:
         }
         this->_tManager.stop();
         isSorted();
+        if(this->_sequenceName == "Shell")
+            this->algTimeSumShell += this->getAlgorithmTime();
+        else
+            if(this->_sequenceName == "Pratt")
+                this->algTimeSumPratt += this->getAlgorithmTime();
+            else
+                this->algTimeSumPrattSecond += this->getAlgorithmTime();
     }
 };
+
+template <class T>
+double ShellSort<T>::algTimeSumShell;
+template <class T>
+double ShellSort<T>::algTimeSumPratt;
+template <class T>
+double ShellSort<T>::algTimeSumPrattSecond;
 
 template <class T>
 ShellSort<T>::ShellSort(QString sequenceName)

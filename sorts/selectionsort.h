@@ -10,6 +10,11 @@ class SelectionSort : public ISort<T>
 {
 public:
     SelectionSort();
+    static double algTimeSum;
+    double getAlgTimeSum()
+    {
+        return this->algTimeSum;
+    }
 
     void sort()
     {
@@ -23,10 +28,12 @@ public:
         }
         this->_tManager.stop();
         this->isSorted();
+        this->algTimeSum += this->getAlgorithmTime();
     }
 };
 // END OF CLASS
-
+template <class T>
+double SelectionSort<T>::algTimeSum;
 
 template <class T>
 SelectionSort<T>::SelectionSort()

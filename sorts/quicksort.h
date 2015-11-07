@@ -8,31 +8,33 @@ class QuickSort : public ISort<T>
 public:
     QuickSort();
     void quickSort(std::vector<T>&, size_t, size_t);
-
+    static double algTimeSum;
+    double getAlgTimeSum()
+    {
+        return this->algTimeSum;
+    }
     void sort()
     {
         this->_tManager.start();
-        qDebug() << "Start sort, array size: " << this->_arr.size();
         quickSort(this->_arr, 0, this->_arr.size()-1);
         this->_tManager.stop();
         this->isSorted();
+        this->algTimeSum += this->getAlgorithmTime();
     }
 };
-
-#endif // QUICKSORT_H
+template <class T>
+double QuickSort<T>::algTimeSum;
 
 template <class T>
 QuickSort<T>::QuickSort()
 {
     this->readArrayFromFile();
-    qDebug() << "Array readed";
     this->_sortAlgorithmName = "Quick";
 }
 
 template <class T>
 void QuickSort<T>::quickSort(std::vector<T> &arr, size_t left, size_t right)
 {
-//    qDebug() << "left: " << left << " right: " << right;
     size_t l = left, r = right;
     double piv = (arr[left] + arr[(left+right)/2] + arr[right])/3;
     while(l <= r)
@@ -49,3 +51,4 @@ void QuickSort<T>::quickSort(std::vector<T> &arr, size_t left, size_t right)
     if(right > l)
         quickSort(arr, l, right);
 }
+#endif // QUICKSORT_H
