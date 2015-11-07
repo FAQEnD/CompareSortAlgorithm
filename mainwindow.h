@@ -11,6 +11,10 @@
 #include <future>
 #include <ctime>
 #include <random>
+#include <thread>
+#include <condition_variable>
+#include <chrono>
+#include <windows.h>
 
 namespace Ui {
 class MainWindow;
@@ -59,6 +63,7 @@ private:
     void readArrayFromFile(std::vector<T>&);
     template <class T>
     void printArray(std::vector<T>&);
+    void saveResultToFile(QString, double);
 };
 
 #endif // MAINWINDOW_H

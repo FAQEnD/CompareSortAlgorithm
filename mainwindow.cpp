@@ -66,19 +66,25 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButtonStartSort_clicked()
 {
 //    prepareArray(_currentSizeIndex, "int");
+    QFile hFile("result.dat");
+    hFile.open(QIODevice::WriteOnly | QIODevice::Text);
     for(unsigned int i = 0; i < _size.size(); ++i)
     {
+        saveResultToFile("Size: ", _size[i]*3);
         ui->textOutput->append("Size: " + QString::number(_size[i]));
         prepareArray(i, "int");
         for(unsigned int j = 0; j < _sortInt.size(); ++j)
         {
-            if(i < 4)
+            if(i < 7)
                 _sortInt[j]();
             else
                 if(j > 1)
                     _sortInt[j]();
+            // run counter in other thread and communicate thrue global variable;
+            // if(time > LITMIT) flag = true; if(flag) stop current sort
         }
     }
+    hFile.close();
 
     //    auto hThread = std::async(std::launch::async, &onClickSelectionSort, this);
     //    hThread.get();
@@ -104,6 +110,7 @@ void MainWindow::onClickSelectionSort()
     ++runCount;
     if(runCount >= 3)
     {
+        this->saveResultToFile("Selection", selSort.getAlgTimeSum());
         ui->textOutput->append("Selection: " + QString::number(selSort.getAlgTimeSum()/3));
         runCount = 0;
     }
@@ -118,13 +125,21 @@ void MainWindow::onClickShellSort(QString sequenceName)
     ++runCount;
     if(runCount >= 3)
     {
-        if(sequenceName == "Shell")
+        if(sequenceName == "Shell") {
+
+            saveResultToFile("Shell(Shell sequence", shell.getAlgTimeSumShell());
             ui->textOutput->append("Shell(Shell sequence): " + QString::number(shell.getAlgTimeSumShell()/3));
+        }
         else
-            if(sequenceName == "Pratt")
+            if(sequenceName == "Pratt") {
+                saveResultToFile("Shell(Pratt sequence)", shell.getAlgTimeSumPratt());
                 ui->textOutput->append("Shell(Pratt sequence): " + QString::number(shell.getAlgTimeSumPratt()/3));
+            }
             else
+            {
+                saveResultToFile("Shell(PrattSecond sequence)", shell.getAlgTimeSumPrattSecond());
                 ui->textOutput->append("Shell(PrattSecond sequence): " + QString::number(shell.getAlgTimeSumPrattSecond()/3));
+            }
         runCount = 0;
     }
 }
@@ -138,6 +153,7 @@ void MainWindow::onClickMergeSort()
     ++runCount;
     if(runCount >= 3)
     {
+        saveResultToFile("Merge", mSort.getAlgTimeSum());
         ui->textOutput->append("Merge: " + QString::number(mSort.getAlgTimeSum()/3));
         runCount = 0;
     }
@@ -152,6 +168,7 @@ void MainWindow::onClickQuickSort()
     ++runCount;
     if(runCount >= 3)
     {
+        saveResultToFile("Quick", quSort.getAlgTimeSum());
         ui->textOutput->append("Quick: " + QString::number(quSort.getAlgTimeSum()/3));
         runCount = 0;
     }
@@ -167,6 +184,7 @@ void MainWindow::onClickCountingSort()
     ++runCount;
     if(runCount >= 3)
     {
+        saveResultToFile("Counting", cSort.getAlgTimeSum());
         ui->textOutput->append("Counting: " + QString::number(cSort.getAlgTimeSum()/3));
         runCount = 0;
     }
@@ -185,6 +203,9 @@ void MainWindow::onClickBubbleSort()
     ++runCount;
     if(runCount >= 3)
     {
+        saveResultToFile("Simple Bubble", bSort.getAlgTimeSumSimple());
+        saveResultToFile("Optimized Bubble", bSort.getAlgTimeSumOptimized());
+        saveResultToFile("With flag Bubble", bSort.getAlgTimeSumWithFlag());
         ui->textOutput->append("Simple Bubble: " + QString::number(bSort.getAlgTimeSumSimple()/3));
         ui->textOutput->append("Optimized Bubble: " + QString::number(bSort.getAlgTimeSumOptimized()/3));
         ui->textOutput->append("With flag Bubble: " + QString::number(bSort.getAlgTimeSumWithFlag()/3));
@@ -383,4 +404,17 @@ void MainWindow::readArrayFromFile(std::vector<T> &arr)
 void MainWindow::on_comboBoxSizeIndex_currentIndexChanged(int index)
 {
     _currentSizeIndex = index;
+}
+
+void MainWindow::saveResultToFile(QString sortName, double time)
+{
+    QFile hFile("result.dat");
+    if (!hFile.open(QIODevice::Append))
+    {
+        qDebug() << "Error in opening file arr.dat";
+        return;
+    }
+    QTextStream textStream(&hFile);
+    textStream << sortName << ": " << QString::number(time/3) << '\n';
+    hFile.close();
 }
