@@ -2,6 +2,15 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QFile>
+#include <QTextStream>
+#include <QString>
+#include <QtDebug>
+#include <algorithm>
+#include <functional>
+#include <future>
+#include <ctime>
+#include <random>
 
 namespace Ui {
 class MainWindow;
@@ -41,6 +50,8 @@ private:
     std::vector<int> _arrInt;
     std::vector<double> _arrDouble;
     std::vector<unsigned int> _size;
+    std::vector<std::function<void()> > _sortInt;
+    std::vector<std::function<void()> > _sortDouble;
     unsigned int _currentSizeIndex;
     template <class T>
     void saveArrayToFile(std::vector<T>&);

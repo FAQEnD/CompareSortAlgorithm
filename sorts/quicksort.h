@@ -7,11 +7,12 @@ class QuickSort : public ISort<T>
 {
 public:
     QuickSort();
-    void quickSort(std::vector<T>&, unsigned int, unsigned int);
+    void quickSort(std::vector<T>&, size_t, size_t);
 
     void sort()
     {
         this->_tManager.start();
+        qDebug() << "Start sort, array size: " << this->_arr.size();
         quickSort(this->_arr, 0, this->_arr.size()-1);
         this->_tManager.stop();
         this->isSorted();
@@ -24,13 +25,15 @@ template <class T>
 QuickSort<T>::QuickSort()
 {
     this->readArrayFromFile();
+    qDebug() << "Array readed";
     this->_sortAlgorithmName = "Quick";
 }
 
 template <class T>
-void QuickSort<T>::quickSort(std::vector<T> &arr, unsigned int left, unsigned int right)
+void QuickSort<T>::quickSort(std::vector<T> &arr, size_t left, size_t right)
 {
-    unsigned int l = left, r = right;
+//    qDebug() << "left: " << left << " right: " << right;
+    size_t l = left, r = right;
     double piv = (arr[left] + arr[(left+right)/2] + arr[right])/3;
     while(l <= r)
     {

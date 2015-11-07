@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = alg_lab_7
 TEMPLATE = app
-CONFIG += c++14
+CONFIG += c++11
 QMAKE_LFLAGS_WINDOWS += -Wl,--stack,32000000
 
 

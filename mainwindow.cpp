@@ -1,20 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "sorts/bubblesort.h"
 #include "sorts/selectionsort.h"
 #include "sorts/shellsort.h"
 #include "sorts/mergesort.h"
 #include "sorts/quicksort.h"
 #include "sorts/countingsort.h"
-#include "sorts/bubblesort.h"
-#include <QtDebug>
-#include <future>
-#include <ctime>
-#include <QString>
-#include <algorithm>
-#include <QFile>
-#include <functional>
-#include <QFile>
-#include <QTextStream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -23,7 +14,28 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     _size = {500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 10000000, 100000000};
     _currentSizeIndex = 6;
-//    _arr = {5, 10, 2, 0, 15, 18, 1};
+    _sortInt.push_back([&]() {
+        this->onClickBubbleSort();
+        this->onClickBubbleSort();
+        return this->onClickBubbleSort(); });
+    _sortInt.push_back([&]() {
+        this->onClickSelectionSort();
+        this->onClickSelectionSort();
+        return this->onClickSelectionSort(); });
+    _sortInt.push_back([&]() { return this->onClickShellSort("Shell"); });
+    _sortInt.push_back([&]() { return this->onClickShellSort("Pratt"); });
+    _sortInt.push_back([&]() { return this->onClickShellSort("Pratt2"); });
+    _sortInt.push_back([&]() { return this->onClickMergeSort(); });
+    _sortInt.push_back([&]() { return this->onClickQuickSort(); });
+    _sortInt.push_back([&]() { return this->onClickCountingSort(); });
+
+    _sortDouble.push_back([&]() { return this->onClickBubbleSortD(); });
+    _sortDouble.push_back([&]() { return this->onClickSelectionSortD(); });
+    _sortDouble.push_back([&]() { return this->onClickShellSortD("Shell"); });
+    _sortDouble.push_back([&]() { return this->onClickShellSortD("Pratt"); });
+    _sortDouble.push_back([&]() { return this->onClickShellSortD("Pratt2"); });
+    _sortDouble.push_back([&]() { return this->onClickMergeSortD(); });
+    _sortDouble.push_back([&]() { return this->onClickQuickSortD(); });
 //    connect(ui->pushButtonStartSort, SIGNAL(clicked()), this, SLOT(onClickSelectionSort()));
 //    connect(ui->pushButtonStartSort, SIGNAL(clicked()), this, SLOT(onClickShellSort()));
 }
@@ -35,11 +47,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButtonStartSort_clicked()
 {
-    prepareArray(_currentSizeIndex, "double");
-//    prepareArray(_currentSizeIndex, "r int");
+    prepareArray(_currentSizeIndex, "int");
     if(_currentSizeIndex <= 6) //then we can sort in threads
     {
         qDebug() << "Run in threads";
+        _sortInt[1]();
     }
     else
     {
@@ -53,7 +65,7 @@ void MainWindow::on_pushButtonStartSort_clicked()
         //    auto hSort = std::async(std::launch::async, [this] { return this->onClickSelectionSort(_arrInt); } );
         // create new thread and formate lambda function for passing arg to function
         //    hSort.get();
-        onClickMergeSortD();
+//        onClickMergeSortD();
         onClickQuickSortD();
 //        onClickCountingSort();
 //        onClickBubbleSort();
@@ -107,14 +119,26 @@ void MainWindow::onClickCountingSort()
 
 void MainWindow::onClickBubbleSort()
 {
+    static double simpleBubbleSortCount, optimizedBubbleSortCount, flagBubbleSortCount;
+    static int runCount;
     BubbleSort <int> bSort;
     bSort.sort();
     qDebug() << "simple bubble sort time: " << bSort.getAlgorithmTime();
+    simpleBubbleSortCount += bSort.getAlgorithmTime();
     bSort.sortOptimized();
     qDebug() << "optimized bubble sort time: " << bSort.getAlgorithmTime();
+    optimizedBubbleSortCount += bSort.getAlgorithmTime();
     bSort.sortWithFlag();
     qDebug() << "bubble sort with flag time: " << bSort.getAlgorithmTime();
-
+    flagBubbleSortCount += bSort.getAlgorithmTime();
+    ++runCount;
+    if(runCount >= 3)
+    {
+        qDebug() << "In sum simple bubble sort time: " << simpleBubbleSortCount;
+        qDebug() << "In sum optimized bubble sort time: " << optimizedBubbleSortCount;
+        qDebug() << "In sum wiht flag bubble sort time: " << flagBubbleSortCount;
+        runCount = 0;
+    }
 }
 
 
