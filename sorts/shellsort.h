@@ -24,15 +24,21 @@ private:
 public:
     double getAlgTimeSumShell()
     {
-        return this->algTimeSumShell;
+        double tempSum = this->algTimeSumShell;
+        this->algTimeSumShell = 0;
+        return tempSum;
     }
     double getAlgTimeSumPratt()
     {
-        return this->algTimeSumPratt;
+        double tempSum = this->algTimeSumPratt;
+        this->algTimeSumPratt = 0;
+        return tempSum;
     }
     double getAlgTimeSumPrattSecond()
     {
-        return this->algTimeSumPrattSecond;
+        double tempSum = this->algTimeSumPrattSecond;
+        this->algTimeSumPrattSecond = 0;
+        return tempSum;
     }
     void sort()
     {

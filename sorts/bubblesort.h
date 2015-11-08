@@ -19,15 +19,21 @@ private:
 public:
     double getAlgTimeSumSimple()
     {
-        return this->algTimeSumSimple;
+        double tempSum = this->algTimeSumSimple;
+        this->algTimeSumSimple = 0;
+        return tempSum;
     }
     double getAlgTimeSumOptimized()
     {
-        return this->algTimeSumOptimized;
+        double tempSum = this->algTimeSumOptimized;
+        this->algTimeSumOptimized = 0;
+        return tempSum;
     }
     double getAlgTimeSumWithFlag()
     {
-        return this->algTimeSumWithFlag;
+        double tempSum = this->algTimeSumWithFlag;
+        this->algTimeSumWithFlag = 0;
+        return tempSum;
     }
     void sort()
     {

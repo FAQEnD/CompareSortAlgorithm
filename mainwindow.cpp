@@ -48,13 +48,34 @@ MainWindow::MainWindow(QWidget *parent) :
         this->onClickCountingSort();
         return this->onClickCountingSort(); });
 
-    _sortDouble.push_back([&]() { return this->onClickBubbleSortD(); });
-    _sortDouble.push_back([&]() { return this->onClickSelectionSortD(); });
-    _sortDouble.push_back([&]() { return this->onClickShellSortD("Shell"); });
-    _sortDouble.push_back([&]() { return this->onClickShellSortD("Pratt"); });
-    _sortDouble.push_back([&]() { return this->onClickShellSortD("Pratt2"); });
-    _sortDouble.push_back([&]() { return this->onClickMergeSortD(); });
-    _sortDouble.push_back([&]() { return this->onClickQuickSortD(); });
+    _sortDouble.push_back([&]() {
+        this->onClickBubbleSortD();
+        this->onClickBubbleSortD();
+        return this->onClickBubbleSortD(); });
+    _sortDouble.push_back([&]() {
+        this->onClickSelectionSortD();
+        this->onClickSelectionSortD();
+        return this->onClickSelectionSortD(); });
+    _sortDouble.push_back([&]() {
+        this->onClickShellSortD("Shell");
+        this->onClickShellSortD("Shell");
+        return this->onClickShellSortD("Shell"); });
+    _sortDouble.push_back([&]() {
+        this->onClickShellSortD("Pratt");
+        this->onClickShellSortD("Pratt");
+        return this->onClickShellSortD("Pratt"); });
+    _sortDouble.push_back([&]() {
+        this->onClickShellSortD("Pratt2");
+        this->onClickShellSortD("Pratt2");
+        return this->onClickShellSortD("Pratt2"); });
+    _sortDouble.push_back([&]() {
+        this->onClickMergeSortD();
+        this->onClickMergeSortD();
+        return this->onClickMergeSortD(); });
+    _sortDouble.push_back([&]() {
+        this->onClickMergeSortD();
+        this->onClickMergeSortD();
+        return this->onClickQuickSortD(); });
 //    connect(ui->pushButtonStartSort, SIGNAL(clicked()), this, SLOT(onClickSelectionSort()));
 //    connect(ui->pushButtonStartSort, SIGNAL(clicked()), this, SLOT(onClickShellSort()));
 }
@@ -67,8 +88,12 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButtonStartSort_clicked()
 {
 //    prepareArray(_currentSizeIndex, "int");
-//    sortIntRandom();
+    sortIntRandom();
     sortIntSorted();
+    sortIntReverse();
+    sortDoubleRandom();
+    sortDoubleSorted();
+    sortDoubleReverse();
 //    sortIntReverse();
 
     //    auto hThread = std::async(std::launch::async, &onClickSelectionSort, this);
@@ -90,9 +115,7 @@ void MainWindow::onClickSelectionSort()
 {
     static int runCount;
     SelectionSort <int> selSort;
-//    auto hTimer = std::async(std::launch::async, &runTimer, this);
     selSort.sort();
-//    stopTimerFlag = true;
     qDebug() << "selection sort time:" << selSort.getAlgorithmTime();
     ++runCount;
     if(runCount >= 3)
@@ -114,7 +137,7 @@ void MainWindow::onClickShellSort(QString sequenceName)
     {
         if(sequenceName == "Shell") {
 
-            saveResultToFile("Shell(Shell sequence", shell.getAlgTimeSumShell());
+            saveResultToFile("Shell(Shell sequence)", shell.getAlgTimeSumShell());
             ui->textOutput->append("Shell(Shell sequence): " + QString::number(shell.getAlgTimeSumShell()/3));
         }
         else
@@ -205,36 +228,79 @@ void MainWindow::onClickBubbleSort()
 
 void MainWindow::onClickSelectionSortD()
 {
+    static int runCount;
     SelectionSort <double> selSort;
     selSort.sort();
+    ++runCount;
+    if(runCount >= 3)
+    {
+        this->saveResultToFile("Selection", selSort.getAlgTimeSum());
+        runCount = 0;
+    }
     qDebug() << "selection sort time:" << selSort.getAlgorithmTime();
 }
 
 void MainWindow::onClickShellSortD(QString sequenceName)
 {
+    static int runCount;
     ShellSort <double> shell(sequenceName);
     shell.sort();
+    ++runCount;
+    if(runCount >= 3)
+    {
+        if(sequenceName == "Shell") {
+
+            saveResultToFile("Shell(Shell sequence)", shell.getAlgTimeSumShell());
+            ui->textOutput->append("Shell(Shell sequence): " + QString::number(shell.getAlgTimeSumShell()/3));
+        }
+        else
+            if(sequenceName == "Pratt") {
+                saveResultToFile("Shell(Pratt sequence)", shell.getAlgTimeSumPratt());
+                ui->textOutput->append("Shell(Pratt sequence): " + QString::number(shell.getAlgTimeSumPratt()/3));
+            }
+            else
+            {
+                saveResultToFile("Shell(PrattSecond sequence)", shell.getAlgTimeSumPrattSecond());
+                ui->textOutput->append("Shell(PrattSecond sequence): " + QString::number(shell.getAlgTimeSumPrattSecond()/3));
+            }
+        runCount = 0;
+    }
     qDebug() << "shell sort time:" << shell.getAlgorithmTime();
 }
 
 void MainWindow::onClickMergeSortD()
 {
-    MergeSort <double> merge;
-    merge.sort();
-    qDebug() << "merge sort time:" << merge.getAlgorithmTime();
-
+    static int runCount;
+    MergeSort <double> mSort;
+    mSort.sort();
+    ++runCount;
+    if(runCount >= 3)
+    {
+        saveResultToFile("Merge", mSort.getAlgTimeSum());
+        ui->textOutput->append("Merge: " + QString::number(mSort.getAlgTimeSum()/3));
+        runCount = 0;
+    }
+    qDebug() << "merge sort time:" << mSort.getAlgorithmTime();
 }
 
 void MainWindow::onClickQuickSortD()
 {
+    static int runCount;
     QuickSort <double> quSort;
     quSort.sort();
+    ++runCount;
+    if(runCount >= 3)
+    {
+        saveResultToFile("Quick", quSort.getAlgTimeSum());
+        ui->textOutput->append("Quick: " + QString::number(quSort.getAlgTimeSum()/3));
+        runCount = 0;
+    }
     qDebug() << "quick sort time: " << quSort.getAlgorithmTime();
-
 }
 
 void MainWindow::onClickBubbleSortD()
 {
+    static int runCount;
     BubbleSort <double> bSort;
     bSort.sort();
     qDebug() << "simple bubble sort time: " << bSort.getAlgorithmTime();
@@ -242,6 +308,17 @@ void MainWindow::onClickBubbleSortD()
     qDebug() << "optimized bubble sort time: " << bSort.getAlgorithmTime();
     bSort.sortWithFlag();
     qDebug() << "bubble sort with flag time: " << bSort.getAlgorithmTime();
+    ++runCount;
+    if(runCount >= 3)
+    {
+        saveResultToFile("Simple Bubble", bSort.getAlgTimeSumSimple());
+        saveResultToFile("Optimized Bubble", bSort.getAlgTimeSumOptimized());
+        saveResultToFile("With flag Bubble", bSort.getAlgTimeSumWithFlag());
+        ui->textOutput->append("Simple Bubble: " + QString::number(bSort.getAlgTimeSumSimple()/3));
+        ui->textOutput->append("Optimized Bubble: " + QString::number(bSort.getAlgTimeSumOptimized()/3));
+        ui->textOutput->append("With flag Bubble: " + QString::number(bSort.getAlgTimeSumWithFlag()/3));
+        runCount = 0;
+    }
 
 }
 
@@ -385,8 +462,6 @@ template <class T>
 void MainWindow::saveArrayToFile(std::vector<T> &arr)
 {
     QFile hFile("arr.dat");
-//    if(hFile.exists() && hFile.size() <= arr.size())
-//        return;
     if (!hFile.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         qDebug() << "Error in opening file arr.dat";
@@ -437,18 +512,43 @@ void MainWindow::saveResultToFile(QString sortName, double time)
         return;
     }
     QTextStream textStream(&hFile);
-    textStream << sortName << ": " << QString::number(time/3) << '\n';
+    std::chrono::time_point<std::chrono::system_clock> currentData;
+    currentData = std::chrono::system_clock::now();
+    std::time_t date = std::chrono::system_clock::to_time_t(currentData);
+    textStream << std::ctime(&date) << "\n";
+    if(sortName == "Size")
+        textStream << "----\n" << sortName << ": " << QString::number(time/3) << '\n';
+    else
+        if(sortName == "Simple Bubble" || sortName == "Optimized Bubble" || sortName == "With flag Bubble")
+            textStream << "-" << sortName << ": " << QString::number(time/3) << '\n';
+        else
+            if(sortName == "Selection")
+                textStream << "--" << sortName << ": " << QString::number(time/3) << '\n';
+            else
+                if(sortName == "Shell(Shell sequence)" || sortName == "Shell(Pratt sequence)" || sortName == "Shell(PrattSecond sequence)")
+                    textStream << "---" << sortName << ": " << QString::number(time/3) << '\n';
+                else
+                    if(sortName == "Merge")
+                        textStream << "----" << sortName << ": " << QString::number(time/3) << '\n';
+                    else
+                        if(sortName == "Quick")
+                            textStream << "-----" << sortName << ": " << QString::number(time/3) << '\n';
+                        else
+                            if(sortName == "Counting")
+                                textStream << "------" << sortName << ": " << QString::number(time/3) << '\n';
+                            else
+                                textStream << sortName << ": " << QString::number(time/3) << '\n';
     hFile.close();
 }
 
 void MainWindow::sortIntRandom()
 {
     QFile hFile("result.dat");
-    hFile.open(QIODevice::WriteOnly | QIODevice::Text);
-    saveResultToFile("Random INT: ", 1);
+    hFile.open(QIODevice::Append);
+    saveResultToFile("\n\n-->Random INT: ", 1);
     for(unsigned int i = 0; i < _size.size(); ++i)
     {
-        saveResultToFile("Size: ", _size[i]*3);
+        saveResultToFile("Size", _size[i]*3);
         ui->textOutput->append("Size: " + QString::number(_size[i]));
         prepareArray(i, "int");
         for(unsigned int j = 0; j < _sortInt.size(); ++j)
@@ -470,11 +570,15 @@ void MainWindow::sortIntRandom()
 void MainWindow::sortIntSorted()
 {
     QFile hFile("result.dat");
-    hFile.open(QIODevice::WriteOnly | QIODevice::Text);
-    saveResultToFile("Sorted INT: ", 2);
+    if (!hFile.open(QIODevice::Append))
+    {
+        qDebug() << "Error in opening file arr.dat";
+        return;
+    }
+    saveResultToFile("\n\n-->Sorted INT: ", 2);
     for(unsigned int i = 0; i < _size.size(); ++i)
     {
-        saveResultToFile("Size: ", _size[i]*3);
+        saveResultToFile("Size", _size[i]*3);
         ui->textOutput->append("Size: " + QString::number(_size[i]));
         prepareArray(i, "s int");
         for(unsigned int j = 0; j < _sortInt.size(); ++j)
@@ -496,11 +600,15 @@ void MainWindow::sortIntSorted()
 void MainWindow::sortIntReverse()
 {
     QFile hFile("result.dat");
-    hFile.open(QIODevice::WriteOnly | QIODevice::Text);
-    saveResultToFile("Reverse Sorted INT: ", 3);
+    if (!hFile.open(QIODevice::Append))
+    {
+        qDebug() << "Error in opening file arr.dat";
+        return;
+    }
+    saveResultToFile("\n\n-->Reverse Sorted INT: ", 3);
     for(unsigned int i = 0; i < _size.size(); ++i)
     {
-        saveResultToFile("Size: ", _size[i]*3);
+        saveResultToFile("Size", _size[i]*3);
         ui->textOutput->append("Size: " + QString::number(_size[i]));
         prepareArray(i, "r int");
         for(unsigned int j = 0; j < _sortInt.size(); ++j)
@@ -522,11 +630,15 @@ void MainWindow::sortIntReverse()
 void MainWindow::sortDoubleRandom()
 {
     QFile hFile("result.dat");
-    hFile.open(QIODevice::WriteOnly | QIODevice::Text);
-    saveResultToFile("Random DOUBLE: ", 1);
+    if (!hFile.open(QIODevice::Append))
+    {
+        qDebug() << "Error in opening file arr.dat";
+        return;
+    }
+    saveResultToFile("\n\n--> Random DOUBLE: ", 1);
     for(unsigned int i = 0; i < _size.size()-1; ++i)
     {
-        saveResultToFile("Size: ", _size[i]*3);
+        saveResultToFile("Size", _size[i]*3);
         ui->textOutput->append("Size: " + QString::number(_size[i]));
         prepareArray(i, "double");
         for(unsigned int j = 0; j < _sortDouble.size(); ++j)
@@ -548,11 +660,15 @@ void MainWindow::sortDoubleRandom()
 void MainWindow::sortDoubleSorted()
 {
     QFile hFile("result.dat");
-    hFile.open(QIODevice::WriteOnly | QIODevice::Text);
-    saveResultToFile("Sorted DOUBLE: ", 2);
+    if (!hFile.open(QIODevice::Append))
+    {
+        qDebug() << "Error in opening file arr.dat";
+        return;
+    }
+    saveResultToFile("\n\n-->Sorted DOUBLE: ", 2);
     for(unsigned int i = 0; i < _size.size()-1; ++i)
     {
-        saveResultToFile("Size: ", _size[i]*3);
+        saveResultToFile("Size", _size[i]*3);
         ui->textOutput->append("Size: " + QString::number(_size[i]));
         prepareArray(i, "s double");
         for(unsigned int j = 0; j < _sortDouble.size(); ++j)
@@ -574,11 +690,15 @@ void MainWindow::sortDoubleSorted()
 void MainWindow::sortDoubleReverse()
 {
     QFile hFile("result.dat");
-    hFile.open(QIODevice::WriteOnly | QIODevice::Text);
-    saveResultToFile("Reverse Sorted DOUBLE: ", 3);
+    if (!hFile.open(QIODevice::Append))
+    {
+        qDebug() << "Error in opening file arr.dat";
+        return;
+    }
+    saveResultToFile("\n\n-->Reverse Sorted DOUBLE: ", 3);
     for(unsigned int i = 0; i < _size.size()-1; ++i)
     {
-        saveResultToFile("Size: ", _size[i]*3);
+        saveResultToFile("Size", _size[i]*3);
         ui->textOutput->append("Size: " + QString::number(_size[i]));
         prepareArray(i, "r double");
         for(unsigned int j = 0; j < _sortDouble.size(); ++j)

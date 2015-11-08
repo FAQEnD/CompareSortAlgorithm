@@ -13,7 +13,9 @@ public:
     static double algTimeSum;
     double getAlgTimeSum()
     {
-        return this->algTimeSum;
+        double tempSum = this->algTimeSum;
+        this->algTimeSum = 0;
+        return tempSum;
     }
 
     void sort()
