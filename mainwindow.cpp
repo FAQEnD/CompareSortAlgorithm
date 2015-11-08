@@ -73,8 +73,8 @@ MainWindow::MainWindow(QWidget *parent) :
         this->onClickMergeSortD();
         return this->onClickMergeSortD(); });
     _sortDouble.push_back([&]() {
-        this->onClickMergeSortD();
-        this->onClickMergeSortD();
+        this->onClickQuickSortD();
+        this->onClickQuickSortD();
         return this->onClickQuickSortD(); });
 //    connect(ui->pushButtonStartSort, SIGNAL(clicked()), this, SLOT(onClickSelectionSort()));
 //    connect(ui->pushButtonStartSort, SIGNAL(clicked()), this, SLOT(onClickShellSort()));
@@ -88,9 +88,9 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButtonStartSort_clicked()
 {
 //    prepareArray(_currentSizeIndex, "int");
-    sortIntRandom();
-    sortIntSorted();
-    sortIntReverse();
+//    sortIntRandom();
+//    sortIntSorted();
+//    sortIntReverse();
     sortDoubleRandom();
     sortDoubleSorted();
     sortDoubleReverse();
