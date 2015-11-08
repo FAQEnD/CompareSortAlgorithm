@@ -44,8 +44,6 @@ public:
     }
 };
 
-#endif // BUBBLESORT_H
-
 template <class T>
 double BubbleSort<T>::algTimeSumSimple;
 template <class T>
@@ -118,3 +116,4 @@ void BubbleSort<T>::readArrayFromFile()
     }
     _saveArr.pop_back();
 }
+#endif // BUBBLESORT_H

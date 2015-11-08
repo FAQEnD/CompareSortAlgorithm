@@ -6,6 +6,7 @@
 #include "sorts/mergesort.h"
 #include "sorts/quicksort.h"
 #include "sorts/countingsort.h"
+#include "timemanager.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,35 +15,35 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     _size = {500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 10000000, 100000000};
     _currentSizeIndex = 6;
-    _sortInt.push_back([&]() {
+    _sortInt.push_back([&]() { // index 0
         this->onClickBubbleSort();
         this->onClickBubbleSort();
         return this->onClickBubbleSort(); });
-    _sortInt.push_back([&]() {
+    _sortInt.push_back([&]() { // index 1
         this->onClickSelectionSort();
         this->onClickSelectionSort();
         return this->onClickSelectionSort(); });
-    _sortInt.push_back([&]() {
+    _sortInt.push_back([&]() { // index 2
         this->onClickShellSort("Shell");
         this->onClickShellSort("Shell");
         return this->onClickShellSort("Shell"); });
-    _sortInt.push_back([&]() {
+    _sortInt.push_back([&]() { // index 3
         this->onClickShellSort("Pratt");
         this->onClickShellSort("Pratt");
         return this->onClickShellSort("Pratt"); });
-    _sortInt.push_back([&]() {
+    _sortInt.push_back([&]() { // index 4
         this->onClickShellSort("Pratt2");
         this->onClickShellSort("Pratt2");
         return this->onClickShellSort("Pratt2"); });
-    _sortInt.push_back([&]() {
+    _sortInt.push_back([&]() { // index 5
         this->onClickMergeSort();
         this->onClickMergeSort();
         return this->onClickMergeSort(); });
-    _sortInt.push_back([&]() {
+    _sortInt.push_back([&]() { // index 6
         this->onClickQuickSort();
         this->onClickQuickSort();
         return this->onClickQuickSort(); });
-    _sortInt.push_back([&]() {
+    _sortInt.push_back([&]() { // index 7
         this->onClickCountingSort();
         this->onClickCountingSort();
         return this->onClickCountingSort(); });
@@ -66,25 +67,9 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButtonStartSort_clicked()
 {
 //    prepareArray(_currentSizeIndex, "int");
-    QFile hFile("result.dat");
-    hFile.open(QIODevice::WriteOnly | QIODevice::Text);
-    for(unsigned int i = 0; i < _size.size(); ++i)
-    {
-        saveResultToFile("Size: ", _size[i]*3);
-        ui->textOutput->append("Size: " + QString::number(_size[i]));
-        prepareArray(i, "int");
-        for(unsigned int j = 0; j < _sortInt.size(); ++j)
-        {
-            if(i < 7)
-                _sortInt[j]();
-            else
-                if(j > 1)
-                    _sortInt[j]();
-            // run counter in other thread and communicate thrue global variable;
-            // if(time > LITMIT) flag = true; if(flag) stop current sort
-        }
-    }
-    hFile.close();
+//    sortIntRandom();
+    sortIntSorted();
+//    sortIntReverse();
 
     //    auto hThread = std::async(std::launch::async, &onClickSelectionSort, this);
     //    hThread.get();
@@ -105,7 +90,9 @@ void MainWindow::onClickSelectionSort()
 {
     static int runCount;
     SelectionSort <int> selSort;
+//    auto hTimer = std::async(std::launch::async, &runTimer, this);
     selSort.sort();
+//    stopTimerFlag = true;
     qDebug() << "selection sort time:" << selSort.getAlgorithmTime();
     ++runCount;
     if(runCount >= 3)
@@ -194,7 +181,9 @@ void MainWindow::onClickBubbleSort()
 {
     static int runCount;
     BubbleSort <int> bSort;
+//    auto hTimer = std::async(std::launch::async, &runTimer, this);
     bSort.sort();
+//    stopTimerFlag = true;
     qDebug() << "Simple Bubble: " << bSort.getAlgorithmTime();
     bSort.sortOptimized();
     qDebug() << "Optimized Bubble: " << bSort.getAlgorithmTime();
@@ -263,47 +252,55 @@ void MainWindow::prepareArray(const unsigned int size, QString type)
         generateArray(_arrInt, _size[size]);
         saveArrayToFile(_arrInt);
         _arrInt.clear();
+        return;
     }else
         if(type == "sorted int" || type == "s int")
         {
-            readArrayFromFile(_arrInt);
+            generateArray(_arrInt, _size[size]);
             std::sort(_arrInt.begin(), _arrInt.end());
             saveArrayToFile(_arrInt);
             _arrInt.clear();
+            return;
         }else
             if(type == "reverse int" || type == "r int")
             {
-                readArrayFromFile(_arrInt);
+                generateArray(_arrInt, _size[size]);
                 if(std::is_sorted(_arrInt.begin(), _arrInt.end()))
                     std::reverse(_arrInt.begin(), _arrInt.end());
                 else
                     std::sort(_arrInt.begin(), _arrInt.end(), std::greater<int>());
                 saveArrayToFile(_arrInt);
                 _arrInt.clear();
+                return;
             }
     if(type == "double")
     {
         generateArray(_arrDouble, _size[size]);
         saveArrayToFile(_arrDouble);
         _arrDouble.clear();
+        return;
     }else
         if(type == "sorted double" || type == "s double")
         {
-            readArrayFromFile(_arrDouble);
+            generateArray(_arrDouble, _size[size]);
             std::sort(_arrDouble.begin(), _arrDouble.end());
             saveArrayToFile(_arrDouble);
             _arrDouble.clear();
+            return;
         }else
             if(type == "reverse double" || type == "r double")
             {
-                readArrayFromFile(_arrDouble);
+                generateArray(_arrDouble, _size[size]);;
                 if(std::is_sorted(_arrDouble.begin(), _arrDouble.end()))
                     std::reverse(_arrDouble.begin(), _arrDouble.end());
                 else
                     std::sort(_arrDouble.begin(), _arrDouble.end(), std::greater<double>());
                 saveArrayToFile(_arrDouble);
                 _arrDouble.clear();
+                return;
             }
+    qDebug() << "File not created";
+    exit(-1);
 }
 
 void MainWindow::generateArray(std::vector<double> &arr, unsigned const int size)
@@ -323,6 +320,31 @@ void MainWindow::generateArray(std::vector<double> &arr, unsigned const int size
             exit(-1);
         };
     qDebug() << "array generated";
+}
+
+void MainWindow::runTimer()
+{
+//    TimeManager tManager;
+//    tManager.start();
+//    while(true)
+//    {
+//        tManager.getTime();
+//        double time = tManager.getAlgTime();
+//        if(time >= 50000)
+//        {
+//            stopThreadFlag = true;
+//            qDebug() << "Algorithm too slow";
+//            tManager.stop();
+//            return;
+//        }
+//        if(stopTimerFlag)
+//        {
+//            stopTimerFlag = false;
+//            tManager.stop();
+//            return;
+//        }
+//    }
+    return;
 }
 
 template <class T>
@@ -416,5 +438,161 @@ void MainWindow::saveResultToFile(QString sortName, double time)
     }
     QTextStream textStream(&hFile);
     textStream << sortName << ": " << QString::number(time/3) << '\n';
+    hFile.close();
+}
+
+void MainWindow::sortIntRandom()
+{
+    QFile hFile("result.dat");
+    hFile.open(QIODevice::WriteOnly | QIODevice::Text);
+    saveResultToFile("Random INT: ", 1);
+    for(unsigned int i = 0; i < _size.size(); ++i)
+    {
+        saveResultToFile("Size: ", _size[i]*3);
+        ui->textOutput->append("Size: " + QString::number(_size[i]));
+        prepareArray(i, "int");
+        for(unsigned int j = 0; j < _sortInt.size(); ++j)
+        {
+            if(i < 6) {
+                _sortInt[j]();
+            }
+            else
+                if(i < 9 && j > 1)
+                    _sortInt[j]();
+                else
+                    if(j > 4)
+                        _sortInt[j]();
+        }
+    }
+    hFile.close();
+}
+
+void MainWindow::sortIntSorted()
+{
+    QFile hFile("result.dat");
+    hFile.open(QIODevice::WriteOnly | QIODevice::Text);
+    saveResultToFile("Sorted INT: ", 2);
+    for(unsigned int i = 0; i < _size.size(); ++i)
+    {
+        saveResultToFile("Size: ", _size[i]*3);
+        ui->textOutput->append("Size: " + QString::number(_size[i]));
+        prepareArray(i, "s int");
+        for(unsigned int j = 0; j < _sortInt.size(); ++j)
+        {
+            if(i < 6) {
+                _sortInt[j]();
+            }
+            else
+                if(i < 9 && j > 1)
+                    _sortInt[j]();
+                else
+                    if(j > 4)
+                        _sortInt[j]();
+        }
+    }
+    hFile.close();
+}
+
+void MainWindow::sortIntReverse()
+{
+    QFile hFile("result.dat");
+    hFile.open(QIODevice::WriteOnly | QIODevice::Text);
+    saveResultToFile("Reverse Sorted INT: ", 3);
+    for(unsigned int i = 0; i < _size.size(); ++i)
+    {
+        saveResultToFile("Size: ", _size[i]*3);
+        ui->textOutput->append("Size: " + QString::number(_size[i]));
+        prepareArray(i, "r int");
+        for(unsigned int j = 0; j < _sortInt.size(); ++j)
+        {
+            if(i < 6) {
+                _sortInt[j]();
+            }
+            else
+                if(i < 9 && j > 1)
+                    _sortInt[j]();
+                else
+                    if(j > 4)
+                        _sortInt[j]();
+        }
+    }
+    hFile.close();
+}
+
+void MainWindow::sortDoubleRandom()
+{
+    QFile hFile("result.dat");
+    hFile.open(QIODevice::WriteOnly | QIODevice::Text);
+    saveResultToFile("Random DOUBLE: ", 1);
+    for(unsigned int i = 0; i < _size.size()-1; ++i)
+    {
+        saveResultToFile("Size: ", _size[i]*3);
+        ui->textOutput->append("Size: " + QString::number(_size[i]));
+        prepareArray(i, "double");
+        for(unsigned int j = 0; j < _sortDouble.size(); ++j)
+        {
+            if(i < 6) {
+                _sortDouble[j]();
+            }
+            else
+                if(i < 9 && j > 1)
+                    _sortDouble[j]();
+                else
+                    if(j > 4)
+                        _sortDouble[j]();
+        }
+    }
+    hFile.close();
+}
+
+void MainWindow::sortDoubleSorted()
+{
+    QFile hFile("result.dat");
+    hFile.open(QIODevice::WriteOnly | QIODevice::Text);
+    saveResultToFile("Sorted DOUBLE: ", 2);
+    for(unsigned int i = 0; i < _size.size()-1; ++i)
+    {
+        saveResultToFile("Size: ", _size[i]*3);
+        ui->textOutput->append("Size: " + QString::number(_size[i]));
+        prepareArray(i, "s double");
+        for(unsigned int j = 0; j < _sortDouble.size(); ++j)
+        {
+            if(i < 6) {
+                _sortDouble[j]();
+            }
+            else
+                if(i < 9 && j > 1)
+                    _sortDouble[j]();
+                else
+                    if(j > 4)
+                        _sortDouble[j]();
+        }
+    }
+    hFile.close();
+}
+
+void MainWindow::sortDoubleReverse()
+{
+    QFile hFile("result.dat");
+    hFile.open(QIODevice::WriteOnly | QIODevice::Text);
+    saveResultToFile("Reverse Sorted DOUBLE: ", 3);
+    for(unsigned int i = 0; i < _size.size()-1; ++i)
+    {
+        saveResultToFile("Size: ", _size[i]*3);
+        ui->textOutput->append("Size: " + QString::number(_size[i]));
+        prepareArray(i, "r double");
+        for(unsigned int j = 0; j < _sortDouble.size(); ++j)
+        {
+            if(i < 6) {
+                _sortDouble[j]();
+            }
+            else
+                if(i < 9 && j > 1)
+                    _sortDouble[j]();
+                else
+                    if(j > 4)
+                        _sortDouble[j]();
+        }
+    }
     hFile.close();
 }

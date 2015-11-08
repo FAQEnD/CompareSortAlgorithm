@@ -7,6 +7,7 @@ class TimeManager
 public:
     void start();
     void stop();
+    void getTime();
     double getAlgTime() const;
 
 private:
@@ -14,10 +15,7 @@ private:
     LARGE_INTEGER _end;
     LARGE_INTEGER _f;
     double _algTime;
-    void getTime();
 };
-
-#endif // TIMEMANAGER_H
 
 void TimeManager::start()
 {
@@ -40,3 +38,4 @@ double TimeManager::getAlgTime() const
 {
     return _algTime;
 }
+#endif // TIMEMANAGER_H

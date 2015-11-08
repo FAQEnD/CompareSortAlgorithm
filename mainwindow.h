@@ -46,6 +46,13 @@ private slots:
     void prepareArray(unsigned const int, QString);
     void generateArray(std::vector<int>&, const unsigned int);
     void generateArray(std::vector<double>&, const unsigned int);
+    void runTimer();
+    void sortIntRandom();
+    void sortIntSorted();
+    void sortIntReverse();
+    void sortDoubleRandom();
+    void sortDoubleSorted();
+    void sortDoubleReverse();
 
     void on_comboBoxSizeIndex_currentIndexChanged(int index);
 

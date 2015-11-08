@@ -32,8 +32,6 @@ public:
 
 };
 
-#endif // COUNTINGSORT_H
-
 template <class T>
 double CountingSort<T>::algTimeSum;
 
@@ -55,3 +53,4 @@ T CountingSort<T>::findMax()
         }
     return max;
 }
+#endif // COUNTINGSORT_H
