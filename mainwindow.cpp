@@ -87,28 +87,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButtonStartSort_clicked()
 {
-//    prepareArray(_currentSizeIndex, "int");
-//    sortIntRandom();
-//    sortIntSorted();
-//    sortIntReverse();
+    sortIntRandom();
+    sortIntSorted();
+    sortIntReverse();
     sortDoubleRandom();
     sortDoubleSorted();
     sortDoubleReverse();
-//    sortIntReverse();
-
-    //    auto hThread = std::async(std::launch::async, &onClickSelectionSort, this);
-    //    hThread.get();
-    //    auto hSort = std::async(std::launch::async, [this] { return this->onClickSelectionSort(_arrInt); } );
-    // create new thread and formate lambda function for passing arg to function
-    //    hSort.get();
-
-    //    onClickSelectionSort(_arrDouble);
-    //    onClickShellSort(_arrDouble, "Shell");
-    //    onClickShellSort(_arrDouble, "Pratt");
-    //    onClickShellSort(_arrDouble, "Pratt2");
-    //    onClickMergeSort(_arrDouble);
-    //    onClickQuickSort(_arrDouble);
-    //    onClickBubbleSort(_arrDouble);
 }
 
 void MainWindow::onClickSelectionSort()
