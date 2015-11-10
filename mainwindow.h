@@ -56,6 +56,10 @@ private slots:
 
     void on_comboBoxSizeIndex_currentIndexChanged(int index);
 
+    void on_comboBoxSelectedSort_currentIndexChanged(int index);
+
+    void on_pushButtonSort_clicked();
+
 private:
     Ui::MainWindow *ui;
     std::vector<int> _arrInt;
@@ -64,6 +68,7 @@ private:
     std::vector<std::function<void()> > _sortInt;
     std::vector<std::function<void()> > _sortDouble;
     unsigned int _currentSizeIndex;
+    unsigned int _currentSortIndex;
     template <class T>
     void saveArrayToFile(std::vector<T>&);
     template <class T>

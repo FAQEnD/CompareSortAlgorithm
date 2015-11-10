@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>478</width>
-    <height>248</height>
+    <height>317</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,25 +15,28 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QPushButton" name="pushButtonStartSort">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
+      <y>230</y>
       <width>80</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>Sort arrays</string>
+     <string>All sorts</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="textOutput">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>310</x>
       <y>10</y>
-      <width>271</width>
-      <height>171</height>
+      <width>141</width>
+      <height>241</height>
      </rect>
     </property>
     <property name="readOnly">
@@ -43,7 +46,7 @@
    <widget class="QComboBox" name="comboBoxSizeIndex">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>160</x>
       <y>40</y>
       <width>81</width>
       <height>22</height>
@@ -100,6 +103,150 @@
     <item>
      <property name="text">
       <string>100000000</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QGroupBox" name="groupBoxSort">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>70</y>
+      <width>241</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Sort</string>
+    </property>
+    <widget class="QCheckBox" name="checkBoxBubble">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>111</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Bubble</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxSelection">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>70</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Selection</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxShell">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>70</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Shell</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxMerge">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>20</y>
+       <width>70</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Merge</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxQuick">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>40</y>
+       <width>70</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Quick</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxCounting">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>60</y>
+       <width>70</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Counting</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="pushButtonSort">
+    <property name="geometry">
+     <rect>
+      <x>164</x>
+      <y>180</y>
+      <width>81</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sort</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBoxSelectedSort">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>40</y>
+      <width>121</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Random Int</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Sorted Int</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Reverse Sorted Int</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Random Double</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Sorted Double</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Reverse Sorted Double</string>
      </property>
     </item>
    </widget>
