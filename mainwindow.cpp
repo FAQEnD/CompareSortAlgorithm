@@ -14,7 +14,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     _size = {500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 10000000, 100000000}; // max index - 9
-    _currentSizeIndex = 6;
+    _currentSizeIndex = 0;
+    _currentSortIndex = 0;
     _sortInt.push_back([&]() { // index 0
         this->onClickBubbleSort();
         this->onClickBubbleSort();
@@ -728,56 +729,58 @@ void MainWindow::on_pushButtonSort_clicked()
                         if(_currentSortIndex == 5)
                             prepareArray(_currentSizeIndex, "r double");
 
-    if(ui->checkBoxBubble->isChecked() && _currentSortIndex == 0)
-        _sortInt[0]();
-    else
+    if(ui->checkBoxBubble->isChecked() == true)
     {
-        _sortDouble[0]();
-        return;
+        if(_currentSortIndex < 3)
+            _sortInt[0]();
+        else
+            _sortDouble[0]();
+    }
+    if(ui->checkBoxSelection->isChecked() == true)
+    {
+        if(_currentSortIndex < 3)
+            _sortInt[1]();
+        else
+            _sortDouble[1]();
     }
 
-    if(ui->checkBoxSelection->isChecked() && _currentSortIndex == 1)
-        _sortInt[1];
-    else
+    if(ui->checkBoxShell->isChecked() == true)
     {
-        _sortDouble[1]();
-        return;
+        if(_currentSortIndex < 3)
+        {
+            _sortInt[2]();
+            _sortInt[3]();
+            _sortInt[4]();
+        }
+        else
+        {
+            _sortDouble[2]();
+            _sortDouble[3]();
+            _sortDouble[4]();
+        }
     }
 
-    if(ui->checkBoxShell->isChecked() && _currentSortIndex == 2)
+    if(ui->checkBoxMerge->isChecked())
     {
-        _sortInt[2]();
-        _sortInt[3]();
-        _sortInt[4]();
-    }
-    else
-    {
-        _sortDouble[2]();
-        _sortDouble[3]();
-        _sortDouble[4]();
-        return;
+        if(_currentSortIndex < 3)
+            _sortInt[5]();
+        else
+            _sortDouble[5]();
     }
 
-    if(ui->checkBoxMerge->isChecked() && _currentSortIndex == 5)
-        _sortInt[5]();
-    else
+    if(ui->checkBoxQuick->isChecked())
     {
-        _sortDouble[5]();
-        return;
+        if(_currentSortIndex < 3)
+            _sortInt[6]();
+        else
+            _sortDouble[6]();
     }
 
-    if(ui->checkBoxQuick->isChecked() && _currentSortIndex == 6)
-        _sortInt[6]();
-    else
-    {
-        _sortDouble[6]();
-        return;
-    }
     if(ui->checkBoxCounting->isChecked() && _currentSizeIndex == 7)
-        _sortInt[7]();
-    else
     {
-        _sortDouble[7]();
-        return;
+        if(_currentSortIndex < 3)
+            _sortInt[7]();
+        else
+            _sortDouble[7]();
     }
 }

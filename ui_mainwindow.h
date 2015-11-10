@@ -106,7 +106,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        comboBoxSizeIndex->setCurrentIndex(6);
+        comboBoxSizeIndex->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
