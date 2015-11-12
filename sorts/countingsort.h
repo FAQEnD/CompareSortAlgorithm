@@ -20,12 +20,12 @@ public:
     {
         this->_tManager.start();
         std::vector<int> counter(findMax() + 1, 0);
-            for (auto arrEl : this->_arr)
-                counter[arrEl]++;
-            this->_arr.clear();
-            for (unsigned int i = 0; i < counter.size(); i++)
-                for (int j = 0; j < counter[i]; j++)
-                    this->_arr.push_back(i);
+        for (auto arrEl : this->_arr)
+            counter[arrEl]++;
+        this->_arr.clear();
+        for (unsigned int i = 0; i < counter.size(); i++)
+            for (int j = 0; j < counter[i]; j++)
+                this->_arr.push_back(i);
 
         this->_tManager.stop();
         this->isSorted();

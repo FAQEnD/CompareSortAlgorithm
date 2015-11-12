@@ -105,8 +105,9 @@ void MainWindow::onClickSelectionSort()
     ++runCount;
     if(runCount >= 3)
     {
-        this->saveResultToFile("Selection", selSort.getAlgTimeSum());
-        ui->textOutput->append("Selection: " + QString::number(selSort.getAlgTimeSum()/3));
+        double algTimeSum = selSort.getAlgTimeSum()/3;
+        this->saveResultToFile("Selection", algTimeSum);
+        ui->textOutput->append("Selection: " + QString::number(algTimeSum));
         runCount = 0;
     }
 }
@@ -121,19 +122,21 @@ void MainWindow::onClickShellSort(QString sequenceName)
     if(runCount >= 3)
     {
         if(sequenceName == "Shell") {
-
-            saveResultToFile("Shell(Shell sequence)", shell.getAlgTimeSumShell());
-            ui->textOutput->append("Shell(Shell sequence): " + QString::number(shell.getAlgTimeSumShell()/3));
+            double algTimeSum = shell.getAlgTimeSumShell()/3;
+            saveResultToFile("Shell(Shell sequence)", algTimeSum);
+            ui->textOutput->append("Shell(Shell sequence): " + QString::number(algTimeSum));
         }
         else
             if(sequenceName == "Pratt") {
-                saveResultToFile("Shell(Pratt sequence)", shell.getAlgTimeSumPratt());
-                ui->textOutput->append("Shell(Pratt sequence): " + QString::number(shell.getAlgTimeSumPratt()/3));
+                double algTimeSum = shell.getAlgTimeSumPratt()/3;
+                saveResultToFile("Shell(Pratt sequence)",algTimeSum);
+                ui->textOutput->append("Shell(Pratt sequence): " + QString::number(algTimeSum));
             }
             else
             {
-                saveResultToFile("Shell(PrattSecond sequence)", shell.getAlgTimeSumPrattSecond());
-                ui->textOutput->append("Shell(PrattSecond sequence): " + QString::number(shell.getAlgTimeSumPrattSecond()/3));
+                double algTimeSum = shell.getAlgTimeSumPrattSecond()/3;
+                saveResultToFile("Shell(PrattSecond sequence)", algTimeSum);
+                ui->textOutput->append("Shell(PrattSecond sequence): " + QString::number(algTimeSum));
             }
         runCount = 0;
     }
@@ -148,8 +151,9 @@ void MainWindow::onClickMergeSort()
     ++runCount;
     if(runCount >= 3)
     {
-        saveResultToFile("Merge", mSort.getAlgTimeSum());
-        ui->textOutput->append("Merge: " + QString::number(mSort.getAlgTimeSum()/3));
+        double algTimeSum = mSort.getAlgTimeSum()/3;
+        saveResultToFile("Merge", algTimeSum);
+        ui->textOutput->append("Merge: " + QString::number(algTimeSum));
         runCount = 0;
     }
 }
@@ -163,8 +167,9 @@ void MainWindow::onClickQuickSort()
     ++runCount;
     if(runCount >= 3)
     {
-        saveResultToFile("Quick", quSort.getAlgTimeSum());
-        ui->textOutput->append("Quick: " + QString::number(quSort.getAlgTimeSum()/3));
+        double algTimeSum = quSort.getAlgTimeSum()/3;
+        saveResultToFile("Quick", algTimeSum);
+        ui->textOutput->append("Quick: " + QString::number(algTimeSum));
         runCount = 0;
     }
 
@@ -179,8 +184,9 @@ void MainWindow::onClickCountingSort()
     ++runCount;
     if(runCount >= 3)
     {
-        saveResultToFile("Counting", cSort.getAlgTimeSum());
-        ui->textOutput->append("Counting: " + QString::number(cSort.getAlgTimeSum()/3));
+        double algTimeSum = cSort.getAlgTimeSum()/3;
+        saveResultToFile("Counting", algTimeSum);
+        ui->textOutput->append("Counting: " + QString::number(algTimeSum));
         runCount = 0;
     }
 }
@@ -200,12 +206,15 @@ void MainWindow::onClickBubbleSort()
     ++runCount;
     if(runCount >= 3)
     {
-        saveResultToFile("Simple Bubble", bSort.getAlgTimeSumSimple());
-        saveResultToFile("Optimized Bubble", bSort.getAlgTimeSumOptimized());
-        saveResultToFile("With flag Bubble", bSort.getAlgTimeSumWithFlag());
-        ui->textOutput->append("Simple Bubble: " + QString::number(bSort.getAlgTimeSumSimple()/3));
-        ui->textOutput->append("Optimized Bubble: " + QString::number(bSort.getAlgTimeSumOptimized()/3));
-        ui->textOutput->append("With flag Bubble: " + QString::number(bSort.getAlgTimeSumWithFlag()/3));
+        double algTimeSumSimple = bSort.getAlgTimeSumSimple()/3;
+        double algTimeSumOptimized = bSort.getAlgTimeSumOptimized()/3;
+        double algTimeSumWithFlag = bSort.getAlgTimeSumWithFlag()/3;
+        saveResultToFile("Simple Bubble", algTimeSumSimple);
+        saveResultToFile("Optimized Bubble", algTimeSumOptimized);
+        saveResultToFile("With flag Bubble", algTimeSumWithFlag);
+        ui->textOutput->append("Simple Bubble: " + QString::number(algTimeSumSimple));
+        ui->textOutput->append("Optimized Bubble: " + QString::number(algTimeSumOptimized));
+        ui->textOutput->append("With flag Bubble: " + QString::number(algTimeSumWithFlag));
         runCount = 0;
     }
 }
@@ -219,7 +228,9 @@ void MainWindow::onClickSelectionSortD()
     ++runCount;
     if(runCount >= 3)
     {
-        this->saveResultToFile("Selection", selSort.getAlgTimeSum());
+        double algTimeSum = selSort.getAlgTimeSum()/3;
+        this->saveResultToFile("Selection", algTimeSum);
+        ui->textOutput->append("Selection: " + QString::number(algTimeSum));
         runCount = 0;
     }
     qDebug() << "selection sort time:" << selSort.getAlgorithmTime();
@@ -234,19 +245,21 @@ void MainWindow::onClickShellSortD(QString sequenceName)
     if(runCount >= 3)
     {
         if(sequenceName == "Shell") {
-
-            saveResultToFile("Shell(Shell sequence)", shell.getAlgTimeSumShell());
-            ui->textOutput->append("Shell(Shell sequence): " + QString::number(shell.getAlgTimeSumShell()/3));
+            double algTimeSum = shell.getAlgTimeSumShell()/3;
+            saveResultToFile("Shell(Shell sequence)", algTimeSum);
+            ui->textOutput->append("Shell(Shell sequence): " + QString::number(algTimeSum));
         }
         else
             if(sequenceName == "Pratt") {
-                saveResultToFile("Shell(Pratt sequence)", shell.getAlgTimeSumPratt());
-                ui->textOutput->append("Shell(Pratt sequence): " + QString::number(shell.getAlgTimeSumPratt()/3));
+                double algTimeSum = shell.getAlgTimeSumPratt()/3;
+                saveResultToFile("Shell(Pratt sequence)", algTimeSum);
+                ui->textOutput->append("Shell(Pratt sequence): " + QString::number(algTimeSum));
             }
             else
             {
-                saveResultToFile("Shell(PrattSecond sequence)", shell.getAlgTimeSumPrattSecond());
-                ui->textOutput->append("Shell(PrattSecond sequence): " + QString::number(shell.getAlgTimeSumPrattSecond()/3));
+                double algTimeSum = shell.getAlgTimeSumPrattSecond()/3;
+                saveResultToFile("Shell(PrattSecond sequence)", algTimeSum);
+                ui->textOutput->append("Shell(PrattSecond sequence): " + QString::number(algTimeSum));
             }
         runCount = 0;
     }
@@ -261,8 +274,9 @@ void MainWindow::onClickMergeSortD()
     ++runCount;
     if(runCount >= 3)
     {
-        saveResultToFile("Merge", mSort.getAlgTimeSum());
-        ui->textOutput->append("Merge: " + QString::number(mSort.getAlgTimeSum()/3));
+        double algTimeSum = mSort.getAlgTimeSum()/3;
+        saveResultToFile("Merge", algTimeSum);
+        ui->textOutput->append("Merge: " + QString::number(algTimeSum));
         runCount = 0;
     }
     qDebug() << "merge sort time:" << mSort.getAlgorithmTime();
@@ -276,8 +290,9 @@ void MainWindow::onClickQuickSortD()
     ++runCount;
     if(runCount >= 3)
     {
-        saveResultToFile("Quick", quSort.getAlgTimeSum());
-        ui->textOutput->append("Quick: " + QString::number(quSort.getAlgTimeSum()/3));
+        double algTimeSum = quSort.getAlgTimeSum()/3;
+        saveResultToFile("Quick", algTimeSum);
+        ui->textOutput->append("Quick: " + QString::number(algTimeSum));
         runCount = 0;
     }
     qDebug() << "quick sort time: " << quSort.getAlgorithmTime();
@@ -296,12 +311,15 @@ void MainWindow::onClickBubbleSortD()
     ++runCount;
     if(runCount >= 3)
     {
-        saveResultToFile("Simple Bubble", bSort.getAlgTimeSumSimple());
-        saveResultToFile("Optimized Bubble", bSort.getAlgTimeSumOptimized());
-        saveResultToFile("With flag Bubble", bSort.getAlgTimeSumWithFlag());
-        ui->textOutput->append("Simple Bubble: " + QString::number(bSort.getAlgTimeSumSimple()/3));
-        ui->textOutput->append("Optimized Bubble: " + QString::number(bSort.getAlgTimeSumOptimized()/3));
-        ui->textOutput->append("With flag Bubble: " + QString::number(bSort.getAlgTimeSumWithFlag()/3));
+        double algTimeSumSimple = bSort.getAlgTimeSumSimple()/3;
+        double algTimeSumOptimized = bSort.getAlgTimeSumOptimized()/3;
+        double algTimeSumWithFlag = bSort.getAlgTimeSumWithFlag()/3;
+        saveResultToFile("Simple Bubble", algTimeSumSimple);
+        saveResultToFile("Optimized Bubble", algTimeSumOptimized);
+        saveResultToFile("With flag Bubble", algTimeSumWithFlag);
+        ui->textOutput->append("Simple Bubble: " + QString::number(algTimeSumSimple));
+        ui->textOutput->append("Optimized Bubble: " + QString::number(algTimeSumOptimized));
+        ui->textOutput->append("With flag Bubble: " + QString::number(algTimeSumWithFlag));
         runCount = 0;
     }
 
@@ -711,6 +729,8 @@ void MainWindow::on_pushButtonSort_clicked()
 {
     if(_currentSizeIndex == 9 && _currentSortIndex > 2)
         return;
+//    if(ui->checkBoxCounting->isChecked() && _currentSortIndex > 2)
+//        return;
     if(_currentSortIndex == 0)
         prepareArray(_currentSizeIndex, "int");
     else
@@ -776,11 +796,11 @@ void MainWindow::on_pushButtonSort_clicked()
             _sortDouble[6]();
     }
 
-    if(ui->checkBoxCounting->isChecked() && _currentSizeIndex == 7)
+    if(ui->checkBoxCounting->isChecked())
     {
         if(_currentSortIndex < 3)
             _sortInt[7]();
         else
-            _sortDouble[7]();
+            return;
     }
 }
